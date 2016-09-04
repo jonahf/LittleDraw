@@ -1,0 +1,10 @@
+{
+  "version": "0.0.0",
+  "code": [
+    "LittleDraw.kl",
+  ],
+  "dfgPresets": {
+    "dir": "DFG",
+    "presetPath": "ThirdParty.LittleDraw"
+  }
+}

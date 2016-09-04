@@ -1,0 +1,21 @@
+
+
+require LittleDraw;
+
+operator entry() {
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+  report("LittleDraw required.");
+}

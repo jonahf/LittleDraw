@@ -1,0 +1,197 @@
+require Math;
+require InlineDrawing;
+
+
+/// \dfgPresetOmit
+const UInt8 LD_MODE_NONE = 255;
+/// \dfgPresetOmit
+const UInt8 LD_MODE_VECTOR = 0;
+/// \dfgPresetOmit
+const UInt8 LD_MODE_POSTRAIL = 1;
+/// \dfgPresetOmit
+const UInt8 LD_MODE_POSDOT = 2;
+/// \dfgPresetOmit
+const UInt8 LD_MODE_AXIS = 3;
+/// \dfgPresetOmit
+const UInt8 LD_MODE_AXIS_TRAIL = 4;
+
+/// \dfgPresetOmit
+interface LDJobInterface {
+  /// \dfgPresetOmit
+  createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos);
+  /// \dfgPresetOmit
+  createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, Vec3 pos);
+};
+
+
+/// \dfgPresetOmit
+object LittleDrawJob : LDJobInterface {
+  UInt8 mode;
+  Color color;
+  LittleDrawJob other;
+};
+
+/// \internal
+inline LittleDrawJob.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {}
+/// \internal
+inline LittleDrawJob.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, Vec3 pos) {}
+
+
+
+
+//
+// LittleDrawVector type
+//
+
+object LittleDrawVector : LittleDrawJob {
+  Vec3 payload;
+};
+
+/// \dfgPresetTitle LittleDrawVector
+/// \dfgPresetCombo mode ("Vector", "Vector Normalized")
+/// \dfgPresetDefault mode 0
+/// \dfgPresetDefault scale 1
+/// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
+function LittleDrawVector(UInt8 mode, Vec3 payload, Scalar scale, Color color, LittleDrawJob other) {
+  this.payload = payload;
+  this.color = color;
+  this.other = other;
+  switch (mode) {
+    case 0:
+      this.mode = LD_MODE_VECTOR;
+      break;
+    case 1:
+      this.mode = LD_MODE_VECTOR;
+      if (!Math_badDivisor(payload.x) || !Math_badDivisor(payload.z) || !Math_badDivisor(payload.y))
+        this.payload = this.payload.unit();
+      break;
+    default:
+      this.mode = LD_MODE_NONE;
+      break;
+  }
+  this.payload *= scale;
+}
+
+/// \dfgPresetCreate
+/// \dfgPresetTitle LittleDrawPoint
+/// \dfgPresetCombo mode ("Position", "Position Trail")
+/// \dfgPresetDefault mode 0
+/// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
+function LittleDrawVector(UInt8 mode, Vec3 payload, Color color, LittleDrawJob other) {
+  this.payload = payload;
+  this.color = color;
+  this.other = other;
+  switch (mode) {
+    case 0:
+      this.mode = LD_MODE_POSDOT;
+      break;
+    case 1:
+      this.mode = LD_MODE_POSTRAIL;
+      break;
+    default:
+      this.mode = LD_MODE_NONE;
+      break;
+  }
+}
+
+/// \dfgPresetOmit
+inline LittleDrawVector.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {
+  if (this.mode == LD_MODE_VECTOR)
+    LittleDraw_addColoredLine(pos, pos + this.payload, 
+                              this.color*0.25, this.color, 
+                              lines, vc);
+  else if (this.mode == LD_MODE_POSTRAIL) {
+    LittleDraw_addColoredLine(pos, this.payload, 
+                              this.color*0.25, this.color, 
+                              lines, vc);
+  }
+}
+
+/// \dfgPresetOmit
+inline LittleDrawVector.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, Vec3 pos) {
+  // if (this.mode == LD_MODE_VECTOR)
+  //   LittleDraw_addColoredLine(pos, pos + this.payload, 
+  //                             this.color, this.color, 
+  //                             lines, vc);
+  // else if (this.mode == LD_MODE_POSTRAIL)
+  //   LittleDraw_addColoredLine(pos, this.payload, 
+  //                             Color(), this.color, 
+  //                             lines, vc);
+}
+
+
+
+object LittleDrawAxis : LittleDrawJob {
+  Mat44 payload;
+};
+
+object LittleDrawColor : LittleDrawJob {
+};
+
+object LittleDrawText : LittleDrawJob {
+  String payload;
+};
+
+
+
+
+//
+// Create Geometry
+//
+
+function LitteDraw_createGeometry(LittleDrawJob jobs[], Geometry geo, io Points debugPoints, io Lines debugLines) {
+  Ref<Lines> lines = debugLines;
+  Ref<Points> points = debugPoints;
+  Ref<Vec3Attribute> posAttr = geo.getAttributes().positionsAttribute;
+  Ref<ColorAttribute> linesVCAttr = lines.getAttributes().getOrCreateColorAttribute("vertexColors");
+  Ref<ColorAttribute> pointsVCAttr = points.getAttributes().getOrCreateColorAttribute("vertexColors");
+
+  for (Size i=0; i<jobs.size(); i++) {
+    Ref<LittleDrawJob> job = jobs[i];
+
+    while (job != null) {
+      switch (job.type()) {
+        // switched out by type to hopefully give the inliner a chance
+
+        case LittleDrawVector:
+          Ref<LittleDrawVector>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
+          Ref<LittleDrawVector>(job).createPoints(points, pointsVCAttr, posAttr.values[i]);
+          break;
+        case LittleDrawAxis:
+          Ref<LittleDrawAxis>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
+          Ref<LittleDrawAxis>(job).createPoints(points, pointsVCAttr, posAttr.values[i]);
+          break;
+        case LittleDrawColor:
+          Ref<LittleDrawColor>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
+          Ref<LittleDrawColor>(job).createPoints(points, pointsVCAttr, posAttr.values[i]);
+          break;
+        case LittleDrawText:
+          Ref<LittleDrawText>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
+          Ref<LittleDrawText>(job).createPoints(points, pointsVCAttr, posAttr.values[i]);
+          break;
+        case LittleDrawJob:
+          break;
+        default:
+          job.createLines(lines, linesVCAttr, posAttr.values[i]);
+          job.createPoints(points, pointsVCAttr, posAttr.values[i]);
+          break;
+      }
+      job = job.other;
+    }
+  }
+  
+}
+
+
+//
+// HELPERS
+//
+
+
+/// \internal
+inline function LittleDraw_addColoredLine(Vec3 pos0, Vec3 pos1, Color color0, Color color1, 
+                                          io Ref<Lines> lines, io Ref<ColorAttribute> linesVCAttr) {
+  lines.addLine(pos0, pos1);
+  linesVCAttr.values[linesVCAttr.size()-2] = color0;
+  linesVCAttr.values[linesVCAttr.size()-1] = color1;
+}

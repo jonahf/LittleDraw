@@ -1,0 +1,64 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Supported types:\n  jobs: LittleDrawJob[]\n  geo: Geometry\n  debugPoints: Points\n  debugLines: Lines\n"
+    },
+  "title" : "LitteDraw_createGeometry",
+  "ports" : [
+    {
+      "objectType" : "ExecPort",
+      "name" : "exec",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "Execute"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "jobs",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "LittleDrawJob[]"
+      },
+    {
+      "objectType" : "ExecPort",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 51,\n  \"g\" : 1,\n  \"b\" : 106\n  }"
+        },
+      "name" : "geo",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "Geometry"
+      },
+    {
+      "objectType" : "ExecPort",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 51,\n  \"g\" : 1,\n  \"b\" : 106\n  }"
+        },
+      "name" : "debugPoints",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "Points"
+      },
+    {
+      "objectType" : "ExecPort",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 51,\n  \"g\" : 1,\n  \"b\" : 106\n  }"
+        },
+      "name" : "debugLines",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "Lines"
+      }
+    ],
+  "extDeps" : {
+    "LittleDraw" : "*"
+    },
+  "presetGUID" : "4CDEFE70C8D10D66720B3A379ABBCD20",
+  "code" : "require LittleDraw;
+
+dfgEntry {
+  LitteDraw_createGeometry(jobs, geo, debugPoints, debugLines);
+}
+"
+  }

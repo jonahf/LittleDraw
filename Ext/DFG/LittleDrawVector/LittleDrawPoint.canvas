@@ -1,0 +1,82 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Vec3\n  color: Color\n  other: LittleDrawJob\n  result: LittleDrawVector\n"
+    },
+  "title" : "LittleDrawPoint",
+  "ports" : [
+    {
+      "objectType" : "ExecPort",
+      "name" : "exec",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "Execute"
+      },
+    {
+      "objectType" : "ExecPort",
+      "metadata" : {
+        "uiCombo" : "(\"Position\", \"Position Trail\")"
+        },
+      "name" : "mode",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "UInt8" : 0
+        },
+      "execPortType" : "In",
+      "typeSpec" : "UInt8"
+      },
+    {
+      "objectType" : "ExecPort",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
+        },
+      "name" : "payload",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "Vec3"
+      },
+    {
+      "objectType" : "ExecPort",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 0,\n  \"b\" : 0\n  }"
+        },
+      "name" : "color",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "Color" : {
+          "r" : 1,
+          "g" : 1,
+          "b" : 1,
+          "a" : 1
+          }
+        },
+      "execPortType" : "In",
+      "typeSpec" : "Color"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "other",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "LittleDrawJob"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "result",
+      "nodePortType" : "In",
+      "execPortType" : "Out",
+      "typeSpec" : "LittleDrawVector"
+      }
+    ],
+  "extDeps" : {
+    "LittleDraw" : "*"
+    },
+  "presetGUID" : "DF87EB2134E358838735F8B6D87C294D",
+  "code" : "require LittleDraw;
+
+dfgEntry {
+  result = LittleDrawVector(mode, payload, color, other);
+}
+"
+  }
