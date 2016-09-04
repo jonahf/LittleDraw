@@ -1,0 +1,59 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Supported types:\n  payload: Color\n  other: LittleDrawJob\n  result: LittleDrawColor\n"
+    },
+  "title" : "LittleDrawColor",
+  "ports" : [
+    {
+      "objectType" : "ExecPort",
+      "name" : "exec",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "Execute"
+      },
+    {
+      "objectType" : "ExecPort",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 0,\n  \"b\" : 0\n  }"
+        },
+      "name" : "payload",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "Color" : {
+          "r" : 0.8999999761581421,
+          "g" : 0.25,
+          "b" : 0.25,
+          "a" : 1
+          }
+        },
+      "execPortType" : "In",
+      "typeSpec" : "Color"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "other",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "LittleDrawJob"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "result",
+      "nodePortType" : "In",
+      "execPortType" : "Out",
+      "typeSpec" : "LittleDrawColor"
+      }
+    ],
+  "extDeps" : {
+    "LittleDraw" : "*"
+    },
+  "presetGUID" : "24D020979356697A8CB6D2A0D856DCFD",
+  "code" : "require LittleDraw;
+
+dfgEntry {
+  result = LittleDrawColor(payload, other);
+}
+"
+  }
