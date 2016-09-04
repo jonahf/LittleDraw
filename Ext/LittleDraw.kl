@@ -232,9 +232,9 @@ inline LittleDrawAxis.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc
     case LD_MODE_A_AXIS_TRAIL:
       LittleDraw_addColoredLine(pos, origin, this.color*0.50, this.color, lines, vc);
     case LD_MODE_A_AXIS:
-      LittleDraw_addColoredLine(origin, x, this.color, Color(0.8, 0.0, 0.0), lines, vc);
-      LittleDraw_addColoredLine(origin, y, this.color, Color(0.0, 0.8, 0.0), lines, vc);
-      LittleDraw_addColoredLine(origin, z, this.color, Color(0.0, 0.0, 0.8), lines, vc);
+      LittleDraw_addColoredLine(origin, x, this.color, Color(1.0, 0.0, 0.0), lines, vc);
+      LittleDraw_addColoredLine(origin, y, this.color, Color(0.0, 1.0, 0.0), lines, vc);
+      LittleDraw_addColoredLine(origin, z, this.color, Color(0.0, 0.0, 1.0), lines, vc);
       break;
   }
 }
