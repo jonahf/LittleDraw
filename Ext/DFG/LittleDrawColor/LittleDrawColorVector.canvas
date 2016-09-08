@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  payload: Vec3\n  intensity: Scalar\n  unit: Boolean\n  normalize: Boolean\n  other: LittleDraw\n  result: LittleDrawColor\n"
+    "uiTooltip" : "Supported types:\n  payload: Vec3\n  intensity: Scalar\n  unit: Boolean\n  normalize: Boolean\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawColor\n"
     },
   "title" : "LittleDrawColorVector",
   "ports" : [
@@ -55,6 +55,16 @@
       },
     {
       "objectType" : "ExecPort",
+      "name" : "pointSize",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "UInt8" : 10
+        },
+      "execPortType" : "In",
+      "typeSpec" : "UInt8"
+      },
+    {
+      "objectType" : "ExecPort",
       "name" : "other",
       "nodePortType" : "Out",
       "execPortType" : "In",
@@ -71,11 +81,11 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "D44A0EE44EFEFF4E396FD2AF75C03036",
+  "presetGUID" : "480D05D0C1545C7F8BE599C386993D3B",
   "code" : "require LittleDraw;
 
 dfgEntry {
-  result = LittleDrawColor(payload, intensity, unit, normalize, other);
+  result = LittleDrawColor(payload, intensity, unit, normalize, pointSize, other);
 }
 "
   }

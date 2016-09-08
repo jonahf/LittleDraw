@@ -39,6 +39,7 @@ object LittleDrawVector : LittleDraw {
   Vec3 payload;
   Color color;
   UInt8 mode;
+  UInt8 pointSize;
 };
 
 /// \dfgPresetTitle LittleDrawVector
@@ -70,11 +71,12 @@ function LittleDrawVector(UInt8 mode, Vec3 payload, Scalar scale, Color color, L
 /// \dfgPresetTitle LittleDrawPoint
 /// \dfgPresetCombo mode ("Position", "Position Trail")
 /// \dfgPresetDefault mode 0
+/// \dfgPresetDefault pointSize 6
 /// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
-function LittleDrawVector(UInt8 mode, Vec3 payload, Color color, LittleDraw other) {
+function LittleDrawVector(UInt8 mode, Vec3 payload, Color color, UInt8 pointSize, LittleDraw other) {
   this.payload = payload;
   this.color = color;
-  this.other = other;
+  this.pointSize = pointSize;
   switch (mode) {
     case 0:
       this.mode = LD_MODE_V_POSDOT;
@@ -109,7 +111,7 @@ inline LittleDrawVector.createPoints(io Ref<Points> points, io Ref<ColorAttribut
   switch (this.mode) {
     case LD_MODE_V_POSTRAIL:
     case LD_MODE_V_POSDOT:
-      LittleDraw_AddColoredPoint(this.payload, 6.0, this.color, points, vc, psizes);
+      LittleDraw_AddColoredPoint(this.payload, this.pointSize, this.color, points, vc, psizes);
       break;
   }
 }
@@ -123,25 +125,30 @@ inline LittleDrawVector.createPoints(io Ref<Points> points, io Ref<ColorAttribut
 
 object LittleDrawColor : LittleDraw {
   Color payload;
+  UInt8 pointSize;
 };
 
 /// \dfgPresetDefault payload {'r':0.9, 'g':0.25, 'b':0.25, 'a':1.0}
-function LittleDrawColor(Color payload, LittleDraw other) {
+/// \dfgPresetDefault pointSize 10
+function LittleDrawColor(Color payload, UInt8 pointSize, LittleDraw other) {
   this.payload = payload;
   this.other = other;
+  this.pointSize = pointSize;
 }
 
 /// \dfgPresetTitle LittleDrawColorScalar
 /// \dfgPresetDefault color {'r':0.9, 'g':0.25, 'b':0.25, 'a':1.0}
 /// \dfgPresetDefault intensity 1.0
 /// \dfgPresetDefault invertedNegatives true
-function LittleDrawColor(Scalar payload, Scalar intensity, Color color, Boolean invertedNegatives, LittleDraw other) {
+/// \dfgPresetDefault pointSize 10
+function LittleDrawColor(Scalar payload, Scalar intensity, Color color, Boolean invertedNegatives, UInt8 pointSize, LittleDraw other) {
   if (payload < 0 && invertedNegatives) {
     this.payload = (Color(1.0, 1.0, 1.0) - color) * payload * -1.0 * intensity;
   } else {
     this.payload = color * payload * intensity;
   }
 
+  this.pointSize = pointSize;
   this.other = other;
 }
 
@@ -150,14 +157,16 @@ function LittleDrawColor(Scalar payload, Scalar intensity, Color color, Boolean 
 /// \dfgPresetDefault intensity 1.0
 /// \dfgPresetDefault unit false
 /// \dfgPresetDefault normalize false
-function LittleDrawColor(Vec3 payload, Scalar intensity, Boolean unit, Boolean normalize, LittleDraw other) {
+/// \dfgPresetDefault pointSize 10
+function LittleDrawColor(Vec3 payload, Scalar intensity, Boolean unit, Boolean normalize, UInt8 pointSize, LittleDraw other) {
   this.payload = payload.toColor(unit, normalize) * intensity;
   this.other = other;
+  this.pointSize = pointSize;
 }
 
 /// \dfgPresetOmit
 inline LittleDrawColor.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, Vec3 pos) {
-  LittleDraw_AddColoredPoint(pos, 10.0, this.payload, points, vc, psizes);
+  LittleDraw_AddColoredPoint(pos, this.pointSize, this.payload, points, vc, psizes);
 }
 
 

@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  payload: Color\n  other: LittleDraw\n  result: LittleDrawColor\n"
+    "uiTooltip" : "Supported types:\n  payload: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawColor\n"
     },
   "title" : "LittleDrawColor",
   "ports" : [
@@ -33,6 +33,16 @@
       },
     {
       "objectType" : "ExecPort",
+      "name" : "pointSize",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "UInt8" : 10
+        },
+      "execPortType" : "In",
+      "typeSpec" : "UInt8"
+      },
+    {
+      "objectType" : "ExecPort",
       "name" : "other",
       "nodePortType" : "Out",
       "execPortType" : "In",
@@ -49,11 +59,11 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "59C1C5BC8C92DE808D30264706280C80",
+  "presetGUID" : "E0475CE8E3C02A7C470EB2BC7B110D12",
   "code" : "require LittleDraw;
 
 dfgEntry {
-  result = LittleDrawColor(payload, other);
+  result = LittleDrawColor(payload, pointSize, other);
 }
 "
   }

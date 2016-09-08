@@ -2,12 +2,12 @@
   "objectType" : "Graph",
   "metadata" : {
     "timeline_timerFps" : "1000",
-    "camera_mat44" : "{\n  \"row0\" : {\n    \"x\" : 0.5404325127601624,\n    \"y\" : 0.1761665195226669,\n    \"z\" : -0.8234690427780151,\n    \"t\" : -14.22274112701416\n    },\n  \"row1\" : {\n    \"x\" : 5.408628931036219e-05,\n    \"y\" : 0.9776890873908997,\n    \"z\" : 0.2095226645469666,\n    \"t\" : 9.524101257324219\n    },\n  \"row2\" : {\n    \"x\" : 0.8420981168746948,\n    \"y\" : -0.1131210327148438,\n    \"z\" : 0.52846360206604,\n    \"t\" : 14.74665451049805\n    },\n  \"row3\" : {\n    \"x\" : 0,\n    \"y\" : 0,\n    \"z\" : 0,\n    \"t\" : 1\n    }\n  }",
+    "camera_mat44" : "{\n  \"row0\" : {\n    \"x\" : 0.6969521641731262,\n    \"y\" : 0.4947155714035034,\n    \"z\" : -0.5199693441390991,\n    \"t\" : -4.807251453399658\n    },\n  \"row1\" : {\n    \"x\" : 5.482434062287211e-05,\n    \"y\" : 0.7240721583366394,\n    \"z\" : 0.6900539398193359,\n    \"t\" : 13.68631267547607\n    },\n  \"row2\" : {\n    \"x\" : 0.7179513573646545,\n    \"y\" : -0.4803010523319244,\n    \"z\" : 0.5047081708908081,\n    \"t\" : 10.71519660949707\n    },\n  \"row3\" : {\n    \"x\" : 0,\n    \"y\" : 0,\n    \"z\" : 0,\n    \"t\" : 1\n    }\n  }",
     "timeline_start" : "1",
     "timeline_loopMode" : "1",
     "uiGraphZoom" : "{\n  \"value\" : 1.275108337402344\n  }",
     "timeline_simMode" : "0",
-    "camera_focalDistance" : "18.87023162841797",
+    "camera_focalDistance" : "11.76533031463623",
     "timeline_current" : "91",
     "timeline_end" : "250",
     "uiGraphPan" : "{\n  \"x\" : -199.0139348437635,\n  \"y\" : 176.423291738926\n  }"
@@ -126,7 +126,7 @@
             "objectType" : "Graph",
             "metadata" : {
               "uiGraphZoom" : "{\n  \"value\" : 0.638672947883606\n  }",
-              "uiGraphPan" : "{\n  \"x\" : 307.7035827636719,\n  \"y\" : 398.7378845214844\n  }"
+              "uiGraphPan" : "{\n  \"x\" : 150.7035827636719,\n  \"y\" : 658.7379150390625\n  }"
               },
             "title" : "",
             "ports" : [],
@@ -212,7 +212,7 @@
                 "objectType" : "Inst",
                 "metadata" : {
                   "uiGraphPos" : "{\"x\":1399.729155540466,\"y\":-833.5978746414185}",
-                  "uiCollapsedState" : "2"
+                  "uiCollapsedState" : "0"
                   },
                 "name" : "LittleDrawVector_1",
                 "ports" : [
@@ -272,7 +272,7 @@
                     }
                   ],
                 "executable" : "ThirdParty.LittleDraw.LittleDrawVector.LittleDrawVector",
-                "presetGUID" : "CA168A5ADF34E79BC3FB8CFEED166FCB"
+                "presetGUID" : "E7F783E0C37F7D4D1E93436CAD1DEB96"
                 },
               {
                 "objectType" : "Inst",
@@ -549,8 +549,8 @@
               {
                 "objectType" : "Inst",
                 "metadata" : {
-                  "uiGraphPos" : "{\"x\":1110.497344017029,\"y\":-858.6332750320435}",
-                  "uiCollapsedState" : "2"
+                  "uiGraphPos" : "{\"x\":1110.497314453125,\"y\":-857.0675542354584}",
+                  "uiCollapsedState" : "0"
                   },
                 "name" : "LinearInterpolate_2",
                 "ports" : [
@@ -637,7 +637,7 @@
                 "objectType" : "Inst",
                 "metadata" : {
                   "uiGraphPos" : "{\"x\":1413.674712181091,\"y\":-1003.080967903137}",
-                  "uiCollapsedState" : "2"
+                  "uiCollapsedState" : "0"
                   },
                 "name" : "LittleDrawPoint_1",
                 "ports" : [
@@ -651,7 +651,7 @@
                     "name" : "mode",
                     "nodePortType" : "In",
                     "defaultValues" : {
-                      "UInt8" : 0
+                      "UInt8" : 1
                       }
                     },
                   {
@@ -681,6 +681,14 @@
                     },
                   {
                     "objectType" : "InstPort",
+                    "name" : "pointSize",
+                    "nodePortType" : "In",
+                    "defaultValues" : {
+                      "UInt8" : 6
+                      }
+                    },
+                  {
+                    "objectType" : "InstPort",
                     "name" : "other",
                     "nodePortType" : "In"
                     },
@@ -691,13 +699,13 @@
                     }
                   ],
                 "executable" : "ThirdParty.LittleDraw.LittleDrawVector.LittleDrawPoint",
-                "presetGUID" : "DF87EB2134E358838735F8B6D87C294D"
+                "presetGUID" : "8020734D1BF3D63834384C4FDB3CC68A"
                 },
               {
                 "objectType" : "Inst",
                 "metadata" : {
-                  "uiGraphPos" : "{\"x\":1374.642851829529,\"y\":-643.9459276199341}",
-                  "uiCollapsedState" : "2"
+                  "uiGraphPos" : "{\"x\":1416.918101072311,\"y\":-647.0774159431458}",
+                  "uiCollapsedState" : "0"
                   },
                 "name" : "LittleDrawColorScalar_1",
                 "ports" : [
@@ -734,6 +742,11 @@
                     },
                   {
                     "objectType" : "InstPort",
+                    "name" : "pointSize",
+                    "nodePortType" : "In"
+                    },
+                  {
+                    "objectType" : "InstPort",
                     "name" : "other",
                     "nodePortType" : "In"
                     },
@@ -744,7 +757,7 @@
                     }
                   ],
                 "executable" : "ThirdParty.LittleDraw.LittleDrawColor.LittleDrawColorScalar",
-                "presetGUID" : "6EC176CBDB9785E96AC1DDCD5C5494AD"
+                "presetGUID" : "A98E05E547A9F91CCD303E523BFF67D5"
                 },
               {
                 "objectType" : "Inst",
@@ -804,7 +817,7 @@
                     }
                   ],
                 "executable" : "ThirdParty.LittleDraw.LittleDrawAxis.LittleDrawAxisXfo",
-                "presetGUID" : "ADEE6C199B38E92FD70385C210EA176A"
+                "presetGUID" : "86BD1D67320C8A0775C3CA9990B2B53B"
                 },
               {
                 "objectType" : "Inst",
@@ -884,6 +897,48 @@
                   ],
                 "executable" : "Fabric.Exts.Math.Quat.SetFrom2Vectors",
                 "presetGUID" : "61AD9218ADA27E81FCC09551ACA1E318"
+                },
+              {
+                "objectType" : "Inst",
+                "metadata" : {
+                  "uiGraphPos" : "{\"x\":1119.974040269852,\"y\":-1004.798743724823}"
+                  },
+                "name" : "ToColor_1",
+                "ports" : [
+                  {
+                    "objectType" : "InstPort",
+                    "name" : "exec",
+                    "nodePortType" : "IO"
+                    },
+                  {
+                    "objectType" : "InstPort",
+                    "name" : "this",
+                    "nodePortType" : "In"
+                    },
+                  {
+                    "objectType" : "InstPort",
+                    "name" : "unit",
+                    "nodePortType" : "In",
+                    "defaultValues" : {
+                      "Boolean" : false
+                      }
+                    },
+                  {
+                    "objectType" : "InstPort",
+                    "name" : "normalize",
+                    "nodePortType" : "In",
+                    "defaultValues" : {
+                      "Boolean" : true
+                      }
+                    },
+                  {
+                    "objectType" : "InstPort",
+                    "name" : "result",
+                    "nodePortType" : "Out"
+                    }
+                  ],
+                "executable" : "ThirdParty.LittleDraw.Vec3.ToColor",
+                "presetGUID" : "B8A5C566A03D8583375C8CB2FFC0C993"
                 }
               ],
             "connections" : {
@@ -893,7 +948,8 @@
                 ],
               "originalNormal" : [
                 "Cross_1.this",
-                "LinearInterpolate_1.this"
+                "LinearInterpolate_1.this",
+                "ToColor_1.this"
                 ],
               "PassThrough.value" : [
                 "newPosition"
@@ -937,7 +993,7 @@
               "MultiplyScalar_2.result" : [
                 "Add_1.rhs"
                 ],
-              "LittleDrawAxisXfo_1.result" : [
+              "LittleDrawPoint_1.result" : [
                 "littleDraw"
                 ],
               "Xfo_1.result" : [
@@ -945,6 +1001,9 @@
                 ],
               "SetFrom2Vectors_1.result" : [
                 "Xfo_1.ori"
+                ],
+              "ToColor_1.result" : [
+                "LittleDrawPoint_1.color"
                 ]
               }
             }
@@ -1959,7 +2018,7 @@ dfgEntry {
                 }
               ],
             "executable" : "ThirdParty.LittleDraw.Func.LitteDraw_createGeometry",
-            "presetGUID" : "4CDEFE70C8D10D66720B3A379ABBCD20"
+            "presetGUID" : "7056828B76AEFE370D72D015911F645C"
             },
           {
             "objectType" : "Inst",
@@ -7337,7 +7396,7 @@ dfgEntry {
       "extDeps" : {
         "LittleDraw" : "*"
         },
-      "presetGUID" : "4CDEFE70C8D10D66720B3A379ABBCD20",
+      "presetGUID" : "7056828B76AEFE370D72D015911F645C",
       "code" : "require LittleDraw;
 
 dfgEntry {
@@ -8598,7 +8657,7 @@ dfgEntry {
       "extDeps" : {
         "LittleDraw" : "*"
         },
-      "presetGUID" : "CA168A5ADF34E79BC3FB8CFEED166FCB",
+      "presetGUID" : "E7F783E0C37F7D4D1E93436CAD1DEB96",
       "code" : "require LittleDraw;
 
 dfgEntry {
@@ -8949,7 +9008,7 @@ dfgEntry {
     "ThirdParty.LittleDraw.LittleDrawVector.LittleDrawPoint" : {
       "objectType" : "Func",
       "metadata" : {
-        "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Vec3\n  color: Color\n  other: LittleDraw\n  result: LittleDrawVector\n"
+        "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Vec3\n  color: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawVector\n"
         },
       "title" : "LittleDrawPoint",
       "ports" : [
@@ -9003,6 +9062,16 @@ dfgEntry {
           },
         {
           "objectType" : "ExecPort",
+          "name" : "pointSize",
+          "nodePortType" : "Out",
+          "defaultValues" : {
+            "UInt8" : 6
+            },
+          "execPortType" : "In",
+          "typeSpec" : "UInt8"
+          },
+        {
+          "objectType" : "ExecPort",
           "name" : "other",
           "nodePortType" : "Out",
           "execPortType" : "In",
@@ -9019,18 +9088,18 @@ dfgEntry {
       "extDeps" : {
         "LittleDraw" : "*"
         },
-      "presetGUID" : "DF87EB2134E358838735F8B6D87C294D",
+      "presetGUID" : "8020734D1BF3D63834384C4FDB3CC68A",
       "code" : "require LittleDraw;
 
 dfgEntry {
-  result = LittleDrawVector(mode, payload, color, other);
+  result = LittleDrawVector(mode, payload, color, pointSize, other);
 }
 "
       },
     "ThirdParty.LittleDraw.LittleDrawColor.LittleDrawColorScalar" : {
       "objectType" : "Func",
       "metadata" : {
-        "uiTooltip" : "Supported types:\n  payload: Scalar\n  intensity: Scalar\n  color: Color\n  invertedNegatives: Boolean\n  other: LittleDraw\n  result: LittleDrawColor\n"
+        "uiTooltip" : "Supported types:\n  payload: Scalar\n  intensity: Scalar\n  color: Color\n  invertedNegatives: Boolean\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawColor\n"
         },
       "title" : "LittleDrawColorScalar",
       "ports" : [
@@ -9088,6 +9157,16 @@ dfgEntry {
           },
         {
           "objectType" : "ExecPort",
+          "name" : "pointSize",
+          "nodePortType" : "Out",
+          "defaultValues" : {
+            "UInt8" : 10
+            },
+          "execPortType" : "In",
+          "typeSpec" : "UInt8"
+          },
+        {
+          "objectType" : "ExecPort",
           "name" : "other",
           "nodePortType" : "Out",
           "execPortType" : "In",
@@ -9104,11 +9183,11 @@ dfgEntry {
       "extDeps" : {
         "LittleDraw" : "*"
         },
-      "presetGUID" : "6EC176CBDB9785E96AC1DDCD5C5494AD",
+      "presetGUID" : "A98E05E547A9F91CCD303E523BFF67D5",
       "code" : "require LittleDraw;
 
 dfgEntry {
-  result = LittleDrawColor(payload, intensity, color, invertedNegatives, other);
+  result = LittleDrawColor(payload, intensity, color, invertedNegatives, pointSize, other);
 }
 "
       },
@@ -9192,7 +9271,7 @@ dfgEntry {
       "extDeps" : {
         "LittleDraw" : "*"
         },
-      "presetGUID" : "ADEE6C199B38E92FD70385C210EA176A",
+      "presetGUID" : "86BD1D67320C8A0775C3CA9990B2B53B",
       "code" : "require LittleDraw;
 
 dfgEntry {
@@ -9337,6 +9416,68 @@ dfgEntry {
 
 dfgEntry {
   result.setFrom2Vectors(sourceDirVec, destDirVec, arbitraryIfAmbiguous);
+}
+"
+      },
+    "ThirdParty.LittleDraw.Vec3.ToColor" : {
+      "objectType" : "Func",
+      "metadata" : {
+        "uiNodeColor" : "{\n  \"r\" : 99,\n  \"g\" : 129,\n  \"b\" : 92\n  }",
+        "uiDocUrl" : "http://docs.fabric-engine.com/FabricEngine/2.3.1-auto-2016090117/HTML/KLExtensionsGuide/Math/Vec3.html",
+        "uiTooltip" : "Supported types:\n  this: Vec3\n  unit: Boolean\n  normalize: Boolean\n  result: Color\n"
+        },
+      "title" : "ToColor",
+      "ports" : [
+        {
+          "objectType" : "ExecPort",
+          "name" : "exec",
+          "nodePortType" : "IO",
+          "execPortType" : "IO",
+          "typeSpec" : "Execute"
+          },
+        {
+          "objectType" : "ExecPort",
+          "metadata" : {
+            "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
+            },
+          "name" : "this",
+          "nodePortType" : "Out",
+          "execPortType" : "In",
+          "typeSpec" : "Vec3"
+          },
+        {
+          "objectType" : "ExecPort",
+          "name" : "unit",
+          "nodePortType" : "Out",
+          "execPortType" : "In",
+          "typeSpec" : "Boolean"
+          },
+        {
+          "objectType" : "ExecPort",
+          "name" : "normalize",
+          "nodePortType" : "Out",
+          "execPortType" : "In",
+          "typeSpec" : "Boolean"
+          },
+        {
+          "objectType" : "ExecPort",
+          "metadata" : {
+            "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 0,\n  \"b\" : 0\n  }"
+            },
+          "name" : "result",
+          "nodePortType" : "In",
+          "execPortType" : "Out",
+          "typeSpec" : "Color"
+          }
+        ],
+      "extDeps" : {
+        "LittleDraw" : "*"
+        },
+      "presetGUID" : "B8A5C566A03D8583375C8CB2FFC0C993",
+      "code" : "require LittleDraw;
+
+dfgEntry {
+  result = this.toColor(unit, normalize);
 }
 "
       },
