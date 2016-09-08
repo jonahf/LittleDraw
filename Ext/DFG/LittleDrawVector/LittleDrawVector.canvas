@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Vec3\n  scale: Scalar\n  color: Color\n  other: LittleDrawJob\n  result: LittleDrawVector\n"
+    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Vec3\n  scale: Scalar\n  color: Color\n  other: LittleDraw\n  result: LittleDrawVector\n"
     },
   "title" : "LittleDrawVector",
   "ports" : [
@@ -69,7 +69,7 @@
       "name" : "other",
       "nodePortType" : "Out",
       "execPortType" : "In",
-      "typeSpec" : "LittleDrawJob"
+      "typeSpec" : "LittleDraw"
       },
     {
       "objectType" : "ExecPort",
@@ -82,7 +82,7 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "CA168A5ADF34E79BC3FB8CFEED166FCB",
+  "presetGUID" : "E7F783E0C37F7D4D1E93436CAD1DEB96",
   "code" : "require LittleDraw;
 
 dfgEntry {

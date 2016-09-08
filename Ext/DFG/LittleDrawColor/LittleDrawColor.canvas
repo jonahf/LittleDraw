@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  payload: Color\n  other: LittleDrawJob\n  result: LittleDrawColor\n"
+    "uiTooltip" : "Supported types:\n  payload: Color\n  other: LittleDraw\n  result: LittleDrawColor\n"
     },
   "title" : "LittleDrawColor",
   "ports" : [
@@ -36,7 +36,7 @@
       "name" : "other",
       "nodePortType" : "Out",
       "execPortType" : "In",
-      "typeSpec" : "LittleDrawJob"
+      "typeSpec" : "LittleDraw"
       },
     {
       "objectType" : "ExecPort",
@@ -49,7 +49,7 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "24D020979356697A8CB6D2A0D856DCFD",
+  "presetGUID" : "59C1C5BC8C92DE808D30264706280C80",
   "code" : "require LittleDraw;
 
 dfgEntry {

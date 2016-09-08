@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  payload: Scalar\n  intensity: Scalar\n  color: Color\n  invertedNegatives: Boolean\n  other: LittleDrawJob\n  result: LittleDrawColor\n"
+    "uiTooltip" : "Supported types:\n  payload: Scalar\n  intensity: Scalar\n  color: Color\n  invertedNegatives: Boolean\n  other: LittleDraw\n  result: LittleDrawColor\n"
     },
   "title" : "LittleDrawColorScalar",
   "ports" : [
@@ -63,7 +63,7 @@
       "name" : "other",
       "nodePortType" : "Out",
       "execPortType" : "In",
-      "typeSpec" : "LittleDrawJob"
+      "typeSpec" : "LittleDraw"
       },
     {
       "objectType" : "ExecPort",
@@ -76,7 +76,7 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "6EC176CBDB9785E96AC1DDCD5C5494AD",
+  "presetGUID" : "A68866A9ABC4F704B8A92ABF0FBB93FD",
   "code" : "require LittleDraw;
 
 dfgEntry {

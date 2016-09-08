@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Mat44\n  scale: Scalar\n  color: Color\n  other: LittleDrawJob\n  result: LittleDrawAxis\n"
+    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Mat44\n  scale: Scalar\n  color: Color\n  other: LittleDraw\n  result: LittleDrawAxis\n"
     },
   "title" : "LittleDrawAxisMat44",
   "ports" : [
@@ -66,7 +66,7 @@
       "name" : "other",
       "nodePortType" : "Out",
       "execPortType" : "In",
-      "typeSpec" : "LittleDrawJob"
+      "typeSpec" : "LittleDraw"
       },
     {
       "objectType" : "ExecPort",
@@ -79,7 +79,7 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "2C4834CC9E6933CCE40AB12930C4D6E1",
+  "presetGUID" : "BEBC5DA3D47D60516F7BE9AC53EF4972",
   "code" : "require LittleDraw;
 
 dfgEntry {

@@ -1,5 +1,5 @@
 require Math;
-require InlineDrawing;
+require Geometry;
 
 /// \dfgPresetOmit
 const UInt8 LD_MODE_NONE = 255;
@@ -12,14 +12,14 @@ interface LDJobInterface {
 
 
 /// \dfgPresetOmit
-object LittleDrawJob : LDJobInterface {
-  LittleDrawJob other;
+object LittleDraw : LDJobInterface {
+  LittleDraw other;
 };
 
 /// \internal
-inline LittleDrawJob.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {}
+inline LittleDraw.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {}
 /// \internal
-inline LittleDrawJob.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> sizes, Vec3 pos) {}
+inline LittleDraw.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> sizes, Vec3 pos) {}
 
 
 
@@ -35,10 +35,10 @@ const UInt8 LD_MODE_V_POSTRAIL = 1;
 /// \dfgPresetOmit
 const UInt8 LD_MODE_V_POSDOT = 2;
 
-object LittleDrawVector : LittleDrawJob {
-  UInt8 mode;
+object LittleDrawVector : LittleDraw {
   Vec3 payload;
   Color color;
+  UInt8 mode;
 };
 
 /// \dfgPresetTitle LittleDrawVector
@@ -46,7 +46,7 @@ object LittleDrawVector : LittleDrawJob {
 /// \dfgPresetDefault mode 0
 /// \dfgPresetDefault scale 1
 /// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
-function LittleDrawVector(UInt8 mode, Vec3 payload, Scalar scale, Color color, LittleDrawJob other) {
+function LittleDrawVector(UInt8 mode, Vec3 payload, Scalar scale, Color color, LittleDraw other) {
   this.payload = payload;
   this.color = color;
   this.other = other;
@@ -71,7 +71,7 @@ function LittleDrawVector(UInt8 mode, Vec3 payload, Scalar scale, Color color, L
 /// \dfgPresetCombo mode ("Position", "Position Trail")
 /// \dfgPresetDefault mode 0
 /// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
-function LittleDrawVector(UInt8 mode, Vec3 payload, Color color, LittleDrawJob other) {
+function LittleDrawVector(UInt8 mode, Vec3 payload, Color color, LittleDraw other) {
   this.payload = payload;
   this.color = color;
   this.other = other;
@@ -121,12 +121,12 @@ inline LittleDrawVector.createPoints(io Ref<Points> points, io Ref<ColorAttribut
 //
 
 
-object LittleDrawColor : LittleDrawJob {
+object LittleDrawColor : LittleDraw {
   Color payload;
 };
 
 /// \dfgPresetDefault payload {'r':0.9, 'g':0.25, 'b':0.25, 'a':1.0}
-function LittleDrawColor(Color payload, LittleDrawJob other) {
+function LittleDrawColor(Color payload, LittleDraw other) {
   this.payload = payload;
   this.other = other;
 }
@@ -135,7 +135,7 @@ function LittleDrawColor(Color payload, LittleDrawJob other) {
 /// \dfgPresetDefault color {'r':0.9, 'g':0.25, 'b':0.25, 'a':1.0}
 /// \dfgPresetDefault intensity 1.0
 /// \dfgPresetDefault invertedNegatives true
-function LittleDrawColor(Scalar payload, Scalar intensity, Color color, Boolean invertedNegatives, LittleDrawJob other) {
+function LittleDrawColor(Scalar payload, Scalar intensity, Color color, Boolean invertedNegatives, LittleDraw other) {
   if (payload < 0 && invertedNegatives) {
     this.payload = (Color(1.0, 1.0, 1.0) - color) * payload * -1.0 * intensity;
   } else {
@@ -150,7 +150,7 @@ function LittleDrawColor(Scalar payload, Scalar intensity, Color color, Boolean 
 /// \dfgPresetDefault intensity 1.0
 /// \dfgPresetDefault unit false
 /// \dfgPresetDefault normalize false
-function LittleDrawColor(Vec3 payload, Scalar intensity, Boolean unit, Boolean normalize, LittleDrawJob other) {
+function LittleDrawColor(Vec3 payload, Scalar intensity, Boolean unit, Boolean normalize, LittleDraw other) {
   this.payload = payload.toColor(unit, normalize) * intensity;
   this.other = other;
 }
@@ -172,17 +172,17 @@ const UInt8 LD_MODE_A_AXIS = 0;
 const UInt8 LD_MODE_A_AXIS_TRAIL = 1;
 
 
-object LittleDrawAxis : LittleDrawJob {
-  UInt8 mode;
+object LittleDrawAxis : LittleDraw {
   Mat44 payload;
   Color color;
+  UInt8 mode;
 };
 
 /// \dfgPresetTitle LittleDrawAxisMat44
 /// \dfgPresetDefault color {'r':0.9, 'g':0.25, 'b':0.25, 'a':1.0}
 /// \dfgPresetDefault scale 1.0
 /// \dfgPresetCombo mode ("Axes", "Axes trail")
-function LittleDrawAxis(UInt8 mode, Mat44 payload, Scalar scale, Color color, LittleDrawJob other) {
+function LittleDrawAxis(UInt8 mode, Mat44 payload, Scalar scale, Color color, LittleDraw other) {
   switch (mode) {
     case 0:
       this.mode = LD_MODE_A_AXIS;
@@ -203,7 +203,7 @@ function LittleDrawAxis(UInt8 mode, Mat44 payload, Scalar scale, Color color, Li
 /// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
 /// \dfgPresetDefault scale 1.0
 /// \dfgPresetCombo mode ("Axes", "Axes trail")
-function LittleDrawAxis(UInt8 mode, Xfo payload, Scalar scale, Color color, LittleDrawJob other) {
+function LittleDrawAxis(UInt8 mode, Xfo payload, Scalar scale, Color color, LittleDraw other) {
   switch (mode) {
     case 0:
       this.mode = LD_MODE_A_AXIS;
@@ -245,10 +245,10 @@ inline LittleDrawAxis.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc
 // LittleDrawAxis type
 //
 
-object LittleDrawText : LittleDrawJob {
-  UInt8 mode;
+object LittleDrawText : LittleDraw {
   String payload;
   Color color;
+  UInt8 mode;
 };
 
 
@@ -258,7 +258,7 @@ object LittleDrawText : LittleDrawJob {
 // Create Geometry
 //
 
-function LitteDraw_createGeometry(LittleDrawJob jobs[], Geometry geo, io Points debugPoints, io Lines debugLines) {
+function LitteDraw_createGeometry(LittleDraw jobs[], Geometry geo, io Points debugPoints, io Lines debugLines) {
   Ref<Lines> lines = debugLines;
   Ref<Points> points = debugPoints;
   Ref<Vec3Attribute> posAttr = geo.getAttributes().positionsAttribute;
@@ -267,7 +267,7 @@ function LitteDraw_createGeometry(LittleDrawJob jobs[], Geometry geo, io Points 
   Ref<ScalarAttribute> pointsSizesAttr = points.getOrCreateSizesAttribute();
 
   for (Size i=0; i<jobs.size(); i++) {
-    Ref<LittleDrawJob> job = jobs[i];
+    Ref<LittleDraw> job = jobs[i];
 
     while (job != null) {
       switch (job.type()) {
@@ -289,7 +289,7 @@ function LitteDraw_createGeometry(LittleDrawJob jobs[], Geometry geo, io Points 
           Ref<LittleDrawText>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
           Ref<LittleDrawText>(job).createPoints(points, pointsVCAttr, pointsSizesAttr, posAttr.values[i]);
           break;
-        case LittleDrawJob:
+        case LittleDraw:
           break;
         default:
           job.createLines(lines, linesVCAttr, posAttr.values[i]);

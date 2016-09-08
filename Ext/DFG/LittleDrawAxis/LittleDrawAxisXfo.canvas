@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Xfo\n  scale: Scalar\n  color: Color\n  other: LittleDrawJob\n  result: LittleDrawAxis\n"
+    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Xfo\n  scale: Scalar\n  color: Color\n  other: LittleDraw\n  result: LittleDrawAxis\n"
     },
   "title" : "LittleDrawAxisXfo",
   "ports" : [
@@ -66,7 +66,7 @@
       "name" : "other",
       "nodePortType" : "Out",
       "execPortType" : "In",
-      "typeSpec" : "LittleDrawJob"
+      "typeSpec" : "LittleDraw"
       },
     {
       "objectType" : "ExecPort",
@@ -79,7 +79,7 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "ADEE6C199B38E92FD70385C210EA176A",
+  "presetGUID" : "86BD1D67320C8A0775C3CA9990B2B53B",
   "code" : "require LittleDraw;
 
 dfgEntry {

@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  jobs: LittleDrawJob[]\n  geo: Geometry\n  debugPoints: Points\n  debugLines: Lines\n"
+    "uiTooltip" : "Supported types:\n  jobs: LittleDraw[]\n  geo: Geometry\n  debugPoints: Points\n  debugLines: Lines\n"
     },
   "title" : "LitteDraw_createGeometry",
   "ports" : [
@@ -18,7 +18,7 @@
       "name" : "jobs",
       "nodePortType" : "Out",
       "execPortType" : "In",
-      "typeSpec" : "LittleDrawJob[]"
+      "typeSpec" : "LittleDraw[]"
       },
     {
       "objectType" : "ExecPort",
@@ -54,7 +54,7 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "4CDEFE70C8D10D66720B3A379ABBCD20",
+  "presetGUID" : "7056828B76AEFE370D72D015911F645C",
   "code" : "require LittleDraw;
 
 dfgEntry {
