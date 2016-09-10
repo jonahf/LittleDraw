@@ -33,7 +33,6 @@ operator entry() {
   report("LittleDraw required.");
 
 
-  UInt8 font[String][8] = getCharMasks();
   test_print_char("A");
 
   String line = "hello people, my name is JONAH";

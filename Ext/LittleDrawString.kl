@@ -212,7 +212,7 @@ const UInt8 FONT_MASKS_CURLYBRACECLOSE[] = [0, 0, 65, 119, 62, 8, 0, 0];
 const UInt8 FONT_MASKS_TILDE[] = [0, 8, 4, 12, 24, 1, 8, 0];  
 
 
-function UInt8[String][8] getCharMasks() {
+function UInt8[String][8] getCharMaskDict() {
   UInt8 dictionary[String][8];
   dictionary[' ' ] = FONT_MASKS_SPACE; 
   dictionary['!' ] = FONT_MASKS_EXCL; 
@@ -313,198 +313,102 @@ function UInt8[String][8] getCharMasks() {
 }
 
 function UInt8[8] getCharMask(String character) {
-  UInt8 dictionary[String][8];
   switch (character) {
-    case ' ' :
-      return FONT_MASKS_SPACE; 
-    case '!' :
-      return FONT_MASKS_EXCL; 
-    case '"' :
-      return FONT_MASKS_DOUBLEQUOTE; 
-    case '#' :
-      return FONT_MASKS_POUND; 
-    case '$' :
-      return FONT_MASKS_DOLLAR; 
-    case '%' :
-      return FONT_MASKS_PERCENT; 
-    case '&' :
-      return FONT_MASKS_AMPERSAND; 
-    case "'" :
-      return FONT_MASKS_SINGLEQUOTE;
-    case '(' :
-      return FONT_MASKS_OPENPAREN; 
-    case ')' :
-      return FONT_MASKS_CLOSEPAREN; 
-    case '*' :
-      return FONT_MASKS_ASTERIX; 
-    case '+' :
-      return FONT_MASKS_PLUS; 
-    case ',' :
-      return FONT_MASKS_COMMA; 
-    case '-' :
-      return FONT_MASKS_MINUS; 
-    case '.' :
-      return FONT_MASKS_PERIOD; 
-    case '/' :
-      return FONT_MASKS_SLASH; 
-    case '0' :
-      return FONT_MASKS_0; 
-    case '1' :
-      return FONT_MASKS_1; 
-    case '2' :
-      return FONT_MASKS_2; 
-    case '3' :
-      return FONT_MASKS_3; 
-    case '4' :
-      return FONT_MASKS_4; 
-    case '5' :
-      return FONT_MASKS_5; 
-    case '6' :
-      return FONT_MASKS_6; 
-    case '7' :
-      return FONT_MASKS_7; 
-    case '8' :
-      return FONT_MASKS_8; 
-    case '9' :
-      return FONT_MASKS_9; 
-    case ':' :
-      return FONT_MASKS_COLON; 
-    case ';' :
-      return FONT_MASKS_SEMICOLON; 
-    case '<' :
-      return FONT_MASKS_LT; 
-    case '=' :
-      return FONT_MASKS_EQ; 
-    case '>' :
-      return FONT_MASKS_GT; 
-    case '?' :
-      return FONT_MASKS_QUESTION; 
-    case '@' :
-      return FONT_MASKS_AT; 
-    case 'A' :
-      return FONT_MASKS_A; 
-    case 'B' :
-      return FONT_MASKS_B; 
-    case 'C' :
-      return FONT_MASKS_C; 
-    case 'D' :
-      return FONT_MASKS_D; 
-    case 'E' :
-      return FONT_MASKS_E; 
-    case 'F' :
-      return FONT_MASKS_F; 
-    case 'G' :
-      return FONT_MASKS_G; 
-    case 'H' :
-      return FONT_MASKS_H; 
-    case 'I' :
-      return FONT_MASKS_I; 
-    case 'J' :
-      return FONT_MASKS_J; 
-    case 'K' :
-      return FONT_MASKS_K; 
-    case 'L' :
-      return FONT_MASKS_L; 
-    case 'M' :
-      return FONT_MASKS_M; 
-    case 'N' :
-      return FONT_MASKS_N; 
-    case 'O' :
-      return FONT_MASKS_O; 
-    case 'P' :
-      return FONT_MASKS_P; 
-    case 'Q' :
-      return FONT_MASKS_Q; 
-    case 'R' :
-      return FONT_MASKS_R; 
-    case 'S' :
-      return FONT_MASKS_S; 
-    case 'T' :
-      return FONT_MASKS_T; 
-    case 'U' :
-      return FONT_MASKS_U; 
-    case 'V' :
-      return FONT_MASKS_V; 
-    case 'W' :
-      return FONT_MASKS_W; 
-    case 'X' :
-      return FONT_MASKS_X; 
-    case 'Y' :
-      return FONT_MASKS_Y; 
-    case 'Z' :
-      return FONT_MASKS_Z; 
-    case '[' :
-      return FONT_MASKS_OPENSQRBRACE; 
-    case '\\':
-      return FONT_MASKS_BACKSLASH; 
-    case ']' :
-      return FONT_MASKS_CLOSESQRBRACE; 
-    case '^' :
-      return FONT_MASKS_POWER; 
-    case '_' :
-      return FONT_MASKS_UNDERSCORE; 
-    case '`' :
-      return FONT_MASKS_TICK; 
-    case 'a' :
-      return FONT_MASKS_a; 
-    case 'b' :
-      return FONT_MASKS_b; 
-    case 'c' :
-      return FONT_MASKS_c; 
-    case 'd' :
-      return FONT_MASKS_d; 
-    case 'e' :
-      return FONT_MASKS_e; 
-    case 'f' :
-      return FONT_MASKS_f; 
-    case 'g' :
-      return FONT_MASKS_g; 
-    case 'h' :
-      return FONT_MASKS_h; 
-    case 'i' :
-      return FONT_MASKS_i; 
-    case 'j' :
-      return FONT_MASKS_j; 
-    case 'k' :
-      return FONT_MASKS_k; 
-    case 'l' :
-      return FONT_MASKS_l; 
-    case 'm' :
-      return FONT_MASKS_m; 
-    case 'n' :
-      return FONT_MASKS_n; 
-    case 'o' :
-      return FONT_MASKS_o; 
-    case 'p' :
-      return FONT_MASKS_p; 
-    case 'q' :
-      return FONT_MASKS_q; 
-    case 'r' :
-      return FONT_MASKS_r; 
-    case 's' :
-      return FONT_MASKS_s; 
-    case 't' :
-      return FONT_MASKS_t; 
-    case 'u' :
-      return FONT_MASKS_u; 
-    case 'v' :
-      return FONT_MASKS_v; 
-    case 'w' :
-      return FONT_MASKS_w; 
-    case 'x' :
-      return FONT_MASKS_x; 
-    case 'y' :
-      return FONT_MASKS_y; 
-    case 'z' :
-      return FONT_MASKS_z; 
-    case '{' :
-      return FONT_MASKS_CURLYBRACEOPEN; 
-    case '|' :
-      return FONT_MASKS_PIPE; 
-    case '}' :
-      return FONT_MASKS_CURLYBRACECLOSE; 
-    case '~' :
-      return FONT_MASKS_TILDE;
+    case '{' : return FONT_MASKS_CURLYBRACEOPEN; 
+    case '}' : return FONT_MASKS_CURLYBRACECLOSE; 
+    case '0' : return FONT_MASKS_0; 
+    case '1' : return FONT_MASKS_1; 
+    case '2' : return FONT_MASKS_2; 
+    case '3' : return FONT_MASKS_3; 
+    case '4' : return FONT_MASKS_4; 
+    case '5' : return FONT_MASKS_5; 
+    case '6' : return FONT_MASKS_6; 
+    case '7' : return FONT_MASKS_7; 
+    case '8' : return FONT_MASKS_8; 
+    case '9' : return FONT_MASKS_9; 
+    case ' ' : return FONT_MASKS_SPACE; 
+    case '!' : return FONT_MASKS_EXCL; 
+    case '"' : return FONT_MASKS_DOUBLEQUOTE; 
+    case '#' : return FONT_MASKS_POUND; 
+    case '$' : return FONT_MASKS_DOLLAR; 
+    case '%' : return FONT_MASKS_PERCENT; 
+    case '&' : return FONT_MASKS_AMPERSAND; 
+    case "'" : return FONT_MASKS_SINGLEQUOTE;
+    case '(' : return FONT_MASKS_OPENPAREN; 
+    case ')' : return FONT_MASKS_CLOSEPAREN; 
+    case '*' : return FONT_MASKS_ASTERIX; 
+    case '+' : return FONT_MASKS_PLUS; 
+    case ',' : return FONT_MASKS_COMMA; 
+    case '-' : return FONT_MASKS_MINUS; 
+    case '.' : return FONT_MASKS_PERIOD; 
+    case '/' : return FONT_MASKS_SLASH; 
+    case ':' : return FONT_MASKS_COLON; 
+    case ';' : return FONT_MASKS_SEMICOLON; 
+    case '<' : return FONT_MASKS_LT; 
+    case '=' : return FONT_MASKS_EQ; 
+    case '>' : return FONT_MASKS_GT; 
+    case '?' : return FONT_MASKS_QUESTION; 
+    case '@' : return FONT_MASKS_AT; 
+    case 'A' : return FONT_MASKS_A; 
+    case 'B' : return FONT_MASKS_B; 
+    case 'C' : return FONT_MASKS_C; 
+    case 'D' : return FONT_MASKS_D; 
+    case 'E' : return FONT_MASKS_E; 
+    case 'F' : return FONT_MASKS_F; 
+    case 'G' : return FONT_MASKS_G; 
+    case 'H' : return FONT_MASKS_H; 
+    case 'I' : return FONT_MASKS_I; 
+    case 'J' : return FONT_MASKS_J; 
+    case 'K' : return FONT_MASKS_K; 
+    case 'L' : return FONT_MASKS_L; 
+    case 'M' : return FONT_MASKS_M; 
+    case 'N' : return FONT_MASKS_N; 
+    case 'O' : return FONT_MASKS_O; 
+    case 'P' : return FONT_MASKS_P; 
+    case 'Q' : return FONT_MASKS_Q; 
+    case 'R' : return FONT_MASKS_R; 
+    case 'S' : return FONT_MASKS_S; 
+    case 'T' : return FONT_MASKS_T; 
+    case 'U' : return FONT_MASKS_U; 
+    case 'V' : return FONT_MASKS_V; 
+    case 'W' : return FONT_MASKS_W; 
+    case 'X' : return FONT_MASKS_X; 
+    case 'Y' : return FONT_MASKS_Y; 
+    case 'Z' : return FONT_MASKS_Z; 
+    case '[' : return FONT_MASKS_OPENSQRBRACE; 
+    case '\\': return FONT_MASKS_BACKSLASH; 
+    case ']' : return FONT_MASKS_CLOSESQRBRACE; 
+    case '^' : return FONT_MASKS_POWER; 
+    case '_' : return FONT_MASKS_UNDERSCORE; 
+    case '`' : return FONT_MASKS_TICK; 
+    case 'a' : return FONT_MASKS_a; 
+    case 'b' : return FONT_MASKS_b; 
+    case 'c' : return FONT_MASKS_c; 
+    case 'd' : return FONT_MASKS_d; 
+    case 'e' : return FONT_MASKS_e; 
+    case 'f' : return FONT_MASKS_f; 
+    case 'g' : return FONT_MASKS_g; 
+    case 'h' : return FONT_MASKS_h; 
+    case 'i' : return FONT_MASKS_i; 
+    case 'j' : return FONT_MASKS_j; 
+    case 'k' : return FONT_MASKS_k; 
+    case 'l' : return FONT_MASKS_l; 
+    case 'm' : return FONT_MASKS_m; 
+    case 'n' : return FONT_MASKS_n; 
+    case 'o' : return FONT_MASKS_o; 
+    case 'p' : return FONT_MASKS_p; 
+    case 'q' : return FONT_MASKS_q; 
+    case 'r' : return FONT_MASKS_r; 
+    case 's' : return FONT_MASKS_s; 
+    case 't' : return FONT_MASKS_t; 
+    case 'u' : return FONT_MASKS_u; 
+    case 'v' : return FONT_MASKS_v; 
+    case 'w' : return FONT_MASKS_w; 
+    case 'x' : return FONT_MASKS_x; 
+    case 'y' : return FONT_MASKS_y; 
+    case 'z' : return FONT_MASKS_z; 
+    case '|' : return FONT_MASKS_PIPE; 
+    case '~' : return FONT_MASKS_TILDE;
   }
 
   return FONT_MASKS_SPACE;
@@ -542,22 +446,20 @@ inline LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> 
 
 }
 
+/// \internal
 inline Boolean font_pixel_on(UInt8[8] character, UInt8 col, UInt8 row) {
   return character[ col ] & (UInt8(1) << row-1);
 }
 
 /// \dfgPresetOmit
 function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, Vec3 pos) {
-  // UInt8 font[String][8] = getCharMasks();
-  Size count = points.pointCount();
+  Size new, new_it, count = points.pointCount();
 
-  Size new;
   for (Size i=0; i<this.payload.length(); i++) { 
-    // UInt8 char[8] = font[this.payload[i]];
-    UInt8 char[8] = getCharMask(this.payload[i]);
+    UInt8 char_mask[8] = getCharMask(this.payload[i]);
     for (UInt8 row=0; row<8; row++) {
       for (UInt8 col=0; col<8; col++) {
-        if (font_pixel_on(char, col, row))
+        if (font_pixel_on(char_mask, col, row))
           new++;
       }
     }
@@ -565,16 +467,12 @@ function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttrib
   }
   points.resize(count + new);
   Vec3Attribute positions = points.getAttributes().positionsAttribute;
-  Size new_it;
-
   for (Size i=0; i<this.payload.length(); i++) { 
-    // UInt8 char[8] = font[this.payload[i]];
-    UInt8 char[8] = getCharMask(this.payload[i]);
+    UInt8 char_mask[8] = getCharMask(this.payload[i]);
     for (UInt8 row=0; row<8; row++) {
       for (UInt8 col=0; col<8; col++) {
-        if (font_pixel_on(char, col, row)) {
-          // Vec3 ppos = Vec3(col + i*8, -row - 200, 0.0);
-          Vec3 ppos = Vec3(col + i*8, -Scalar(row) + 8, 0.0);
+        if (font_pixel_on(char_mask, col, row)) {
+          Vec3 ppos = Vec3(col + i*8, -Scalar(row) + 8, 0);
           positions.values[count + new_it] = this.xfo.transformVector(ppos) + pos;
           vc.values[count + new_it] = this.color;
           psizes.values[count + new_it] = this.pointSize * 0.5;
@@ -582,7 +480,6 @@ function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttrib
         }
       }
     }
-    // break;
   }
 }
 

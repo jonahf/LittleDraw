@@ -4,7 +4,7 @@
   "metadata" : {
     "uiTooltip" : "Supported types:\n  result: UInt8[String][8]\n"
     },
-  "title" : "GetCharMasks",
+  "title" : "GetCharMaskDict",
   "ports" : [
     {
       "objectType" : "ExecPort",
@@ -24,11 +24,11 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "8DB19223E830916E2EB3426C85608AF5",
+  "presetGUID" : "AEF576887DF3F29EA5AB5E3ED5D6A3DB",
   "code" : "require LittleDraw;
 
 dfgEntry {
-  result = getCharMasks();
+  result = getCharMaskDict();
 }
 "
   }
