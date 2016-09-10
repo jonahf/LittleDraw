@@ -1,0 +1,31 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "FONT_MASKS_4",
+  "ports" : [
+    {
+      "objectType" : "ExecPort",
+      "name" : "exec",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "Execute"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "value",
+      "nodePortType" : "In",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt8"
+      }
+    ],
+  "extDeps" : {
+    "LittleDraw" : "*"
+    },
+  "presetGUID" : "11B529A7EAF8747C23CFC416BC1A7A0A",
+  "code" : "require LittleDraw;
+
+dfgEntry {
+  value = FONT_MASKS_4;
+}
+"
+  }

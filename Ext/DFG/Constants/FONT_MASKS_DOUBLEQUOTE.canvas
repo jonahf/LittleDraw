@@ -1,0 +1,31 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "FONT_MASKS_DOUBLEQUOTE",
+  "ports" : [
+    {
+      "objectType" : "ExecPort",
+      "name" : "exec",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "Execute"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "value",
+      "nodePortType" : "In",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt8"
+      }
+    ],
+  "extDeps" : {
+    "LittleDraw" : "*"
+    },
+  "presetGUID" : "9E88B76C609D9A8865B0CD7B9FBD4F1E",
+  "code" : "require LittleDraw;
+
+dfgEntry {
+  value = FONT_MASKS_DOUBLEQUOTE;
+}
+"
+  }

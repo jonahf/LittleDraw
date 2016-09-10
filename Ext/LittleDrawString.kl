@@ -1,4 +1,5 @@
-// These are bitmasks for pixels in columns Each character is an 8x8 grid. 
+// These are bitmasks for pixels in columns. 
+// Each character is an 8x8 grid. 
 //
 // For example [1, 2, 4, 8, 16, 0, 0, 255] would draw this:
 // Columns:
@@ -13,201 +14,293 @@
 //        #
 //        #
 
-const UInt8 CHAR_MASK_SPACE[] = [0, 0, 0, 0, 0, 0, 0, 0];  //' ' = 0
-const UInt8 CHAR_MASK_EXCL[]  = [0, 0, 0, 79, 79, 0, 0, 0];  //'!' = 1
-const UInt8 CHAR_MASK_DOUBLEQUOTE[] = [0, 7, 7, 0, 0, 7, 7, 0];  //'\" ] =2
-const UInt8 CHAR_MASK_POUND[] = [20, 127, 127, 20, 20, 127, 127, 20];  //'#' = 3
-const UInt8 CHAR_MASK_DOLLAR[] = [0, 36, 46, 107, 107, 58, 18, 0];  //'$' = 4
-const UInt8 CHAR_MASK_PERCENT[] = [0, 99, 51, 24, 12, 102, 99, 0];  //'%' = 5
-const UInt8 CHAR_MASK_AMPERSAND[] = [0, 50, 127, 77, 77, 119, 114, 80];  //'&' = 6
-const UInt8 CHAR_MASK_SINGLEQUOTE[] = [0, 0, 0, 7, 7, 0, 0, 0];  //'\' ] =7
-const UInt8 CHAR_MASK_OPENPAREN[] = [0, 0, 28, 62, 99, 65, 0, 0];  //'(' = 8
-const UInt8 CHAR_MASK_CLOSEPAREN[] = [0, 0, 65, 99, 62, 28, 0, 0];  //')' = 9
-const UInt8 CHAR_MASK_ASTERIX[] = [8, 42, 62, 28, 28, 62, 42, 8];  //'*' = 10
-const UInt8 CHAR_MASK_PLUS[] = [0, 8, 8, 62, 62, 8, 8, 0];  //'+' = 11
-const UInt8 CHAR_MASK_COMMA[] = [0, 0, 128, 224, 96, 0, 0, 0];  //',' = 12
-const UInt8 CHAR_MASK_MINUS[] = [0, 8, 8, 8, 8, 8, 8, 0];  //'-' = 13
-const UInt8 CHAR_MASK_PERIOD[] = [0, 0, 0, 96, 96, 0, 0, 0];  //'.' = 14
-const UInt8 CHAR_MASK_SLASH[] = [0, 64, 96, 48, 24, 12, 6, 2];  //'/' = 15
-const UInt8 CHAR_MASK_0[] = [0, 62, 127, 73, 69, 127, 62, 0];  //'0' = 16
-const UInt8 CHAR_MASK_1[] = [0, 64, 68, 127, 127, 64, 64, 0];  //'1' = 17
-const UInt8 CHAR_MASK_2[] = [0, 98, 115, 81, 73, 79, 70, 0];  //'2' = 18
-const UInt8 CHAR_MASK_3[] = [0, 34, 99, 73, 73, 127, 54, 0];  //'3' = 19
-const UInt8 CHAR_MASK_4[] = [0, 24, 24, 20, 22, 127, 127, 16];  //'4' = 20
-const UInt8 CHAR_MASK_5[] = [0, 39, 103, 69, 69, 125, 57, 0];  //'5' = 21
-const UInt8 CHAR_MASK_6[] = [0, 62, 127, 73, 73, 123, 50, 0];  //'6' = 22
-const UInt8 CHAR_MASK_7[] = [0, 3, 3, 121, 125, 7, 3, 0];  //'7' = 23
-const UInt8 CHAR_MASK_8[] = [0, 54, 127, 73, 73, 127, 54, 0];  //'8' = 24
-const UInt8 CHAR_MASK_9[] = [0, 38, 111, 73, 73, 127, 62, 0];  //'9' = 25
-const UInt8 CHAR_MASK_COLON[] = [0, 0, 0, 36, 36, 0, 0, 0];  //':' = 26
-const UInt8 CHAR_MASK_SEMICOLON[] = [0, 0, 128, 228, 100, 0, 0, 0];  //';' = 27;
-const UInt8 CHAR_MASK_LT[] = [0, 8, 28, 54, 99, 65, 65, 0];  //'<' = 28
-const UInt8 CHAR_MASK_EQ[] = [0, 20, 20, 20, 20, 20, 20, 0];  //'=' = 29
-const UInt8 CHAR_MASK_GT[] = [0, 65, 65, 99, 54, 28, 8, 0];  //'>' = 30
-const UInt8 CHAR_MASK_QUESTION[] = [0, 2, 3, 81, 89, 15, 6, 0];  //'?' = 31
-const UInt8 CHAR_MASK_AT[] = [0, 62, 127, 65, 77, 79, 46, 0];  //'@' = 32
-const UInt8 CHAR_MASK_A[] = [0, 124, 126, 11, 11, 126, 124, 0];  //'A' = 33
-const UInt8 CHAR_MASK_B[] = [0, 127, 127, 73, 73, 127, 54, 0];  //'B' = 34
-const UInt8 CHAR_MASK_C[] = [0, 62, 127, 65, 65, 99, 34, 0];  //'C' = 35
-const UInt8 CHAR_MASK_D[] = [0, 127, 127, 65, 99, 62, 28, 0];  //'D' = 36
-const UInt8 CHAR_MASK_E[] = [0, 127, 127, 73, 73, 65, 65, 0];  //'E' = 37
-const UInt8 CHAR_MASK_F[] = [0, 127, 127, 9, 9, 1, 1, 0];  //'F' = 38
-const UInt8 CHAR_MASK_G[] = [0, 62, 127, 65, 73, 123, 58, 0];  //'G' = 39
-const UInt8 CHAR_MASK_H[] = [0, 127, 127, 8, 8, 127, 127, 0];  //'H' = 40
-const UInt8 CHAR_MASK_I[] = [0, 0, 65, 127, 127, 65, 0, 0];  //'I' = 41
-const UInt8 CHAR_MASK_J[] = [0, 32, 96, 65, 127, 63, 1, 0];  //'J' = 42
-const UInt8 CHAR_MASK_K[] = [0, 127, 127, 28, 54, 99, 65, 0];  //'K' = 43
-const UInt8 CHAR_MASK_L[] = [0, 127, 127, 64, 64, 64, 64, 0];  //'L' = 44
-const UInt8 CHAR_MASK_M[] = [0, 127, 127, 6, 12, 6, 127, 127];  //'M' = 45
-const UInt8 CHAR_MASK_N[] = [0, 127, 127, 14, 28, 127, 127, 0];  //'N' = 46
-const UInt8 CHAR_MASK_O[] = [0, 62, 127, 65, 65, 127, 62, 0];  //'O' = 47
-const UInt8 CHAR_MASK_P[] = [0, 127, 127, 9, 9, 15, 6, 0];  //'P' = 48
-const UInt8 CHAR_MASK_Q[] = [0, 30, 63, 33, 97, 127, 94, 0];  //'Q' = 49
-const UInt8 CHAR_MASK_R[] = [0, 127, 127, 25, 57, 111, 70, 0];  //'R' = 50
-const UInt8 CHAR_MASK_S[] = [0, 38, 111, 73, 73, 123, 50, 0];  //'S' = 51
-const UInt8 CHAR_MASK_T[] = [0, 1, 1, 127, 127, 1, 1, 0];  //'T' = 52
-const UInt8 CHAR_MASK_U[] = [0, 63, 127, 64, 64, 127, 63, 0];  //'U' = 53
-const UInt8 CHAR_MASK_V[] = [0, 31, 63, 96, 96, 63, 31, 0];  //'V' = 54
-const UInt8 CHAR_MASK_W[] = [0, 127, 127, 48, 24, 48, 127, 127];  //'W' = 55
-const UInt8 CHAR_MASK_X[] = [0, 99, 119, 28, 28, 119, 99, 0];  //'X' = 56
-const UInt8 CHAR_MASK_Y[] = [0, 7, 15, 120, 120, 15, 7, 0];  //'Y' = 57
-const UInt8 CHAR_MASK_Z[] = [0, 97, 113, 89, 77, 71, 67, 0];  //'Z' = 58
-const UInt8 CHAR_MASK_OPENSQRBRACE[] = [0, 0, 127, 127, 65, 65, 0, 0];  //'[' = 59
-const UInt8 CHAR_MASK_BACKSLASH[] = [0, 2, 6, 12, 24, 48, 96, 64];  //'\\ ] =60
-const UInt8 CHAR_MASK_CLOSESQRBRACE[] = [0, 0, 65, 65, 127, 127, 0, 0];  //']' = 61
-const UInt8 CHAR_MASK_POWER[] = [0, 4, 6, 3, 3, 6, 4, 0];  //'^' = 62
-const UInt8 CHAR_MASK_UNDERSCORE[] = [0, 128, 128, 128, 128, 128, 128, 128];  //'_' = 63
-const UInt8 CHAR_MASK_TICK[] = [0, 0, 0, 1, 3, 6, 4, 0];  //'`' = 64
-const UInt8 CHAR_MASK_a[] = [0, 32, 116, 84, 84, 124, 120, 0];  //'a' = 65
-const UInt8 CHAR_MASK_b[] = [0, 126, 126, 72, 72, 120, 48, 0];  //'b' = 66
-const UInt8 CHAR_MASK_c[] = [0, 56, 124, 68, 68, 68, 0, 0];  //'c' = 67
-const UInt8 CHAR_MASK_d[] = [0, 48, 120, 72, 72, 126, 126, 0];  //'d' = 68
-const UInt8 CHAR_MASK_e[] = [0, 56, 124, 84, 84, 92, 24, 0];  //'e' = 69
-const UInt8 CHAR_MASK_f[] = [0, 0, 8, 124, 126, 10, 10, 0];  //'f' = 70
-const UInt8 CHAR_MASK_g[] = [0, 152, 188, 164, 164, 252, 124, 0];  //'g' = 71
-const UInt8 CHAR_MASK_h[] = [0, 126, 126, 8, 8, 120, 112, 0];  //'h' = 72
-const UInt8 CHAR_MASK_i[] = [0, 0, 72, 122, 122, 64, 0, 0];  //'i' = 73
-const UInt8 CHAR_MASK_j[] = [0, 0, 128, 128, 128, 250, 122, 0];  //'j' = 74
-const UInt8 CHAR_MASK_k[] = [0, 126, 126, 16, 56, 104, 64, 0];  //'k' = 75
-const UInt8 CHAR_MASK_l[] = [0, 0, 66, 126, 126, 64, 0, 0];  //'l' = 76
-const UInt8 CHAR_MASK_m[] = [0, 124, 124, 24, 56, 28, 124, 120];  //'m' = 77
-const UInt8 CHAR_MASK_n[] = [0, 124, 124, 4, 4, 124, 120, 0];  //'n' = 78
-const UInt8 CHAR_MASK_o[] = [0, 56, 124, 68, 68, 124, 56, 0];  //'o' = 79
-const UInt8 CHAR_MASK_p[] = [0, 252, 252, 36, 36, 60, 24, 0];  //'p' = 80
-const UInt8 CHAR_MASK_q[] = [0, 24, 60, 36, 36, 252, 252, 0];  //'q' = 81
-const UInt8 CHAR_MASK_r[] = [0, 124, 124, 4, 4, 12, 8, 0];  //'r' = 82
-const UInt8 CHAR_MASK_s[] = [0, 72, 92, 84, 84, 116, 36, 0];  //'s' = 83
-const UInt8 CHAR_MASK_t[] = [0, 4, 4, 62, 126, 68, 68, 0];  //'t' = 84
-const UInt8 CHAR_MASK_u[] = [0, 60, 124, 64, 64, 124, 124, 0];  //'u' = 85
-const UInt8 CHAR_MASK_v[] = [0, 28, 60, 96, 96, 60, 28, 0];  //'v' = 86
-const UInt8 CHAR_MASK_w[] = [0, 28, 124, 112, 56, 112, 124, 28];  //'w' = 87
-const UInt8 CHAR_MASK_x[] = [0, 68, 108, 56, 56, 108, 68, 0];  //'x' = 88
-const UInt8 CHAR_MASK_y[] = [0, 156, 188, 160, 224, 124, 60, 0];  //'y' = 89
-const UInt8 CHAR_MASK_z[] = [0, 68, 100, 116, 92, 76, 68, 0];  //'z' = 90
-const UInt8 CHAR_MASK_CURLYBRACEOPEN[] = [0, 0, 8, 62, 119, 65, 0, 0];  //'{' = 91
-const UInt8 CHAR_MASK_PIPE[] = [0, 0, 0, 127, 127, 0, 0, 0];  //'|' = 92
-const UInt8 CHAR_MASK_CURLYBRACECLOSE[] = [0, 0, 65, 119, 62, 8, 0, 0];  //'}' = 93
-const UInt8 CHAR_MASK_TILDE[] = [0, 8, 4, 12, 24, 1, 8, 0];   //'~' = 93
+const UInt8 FONT_MASKS_SPACE[] = [0, 0, 0, 0, 0, 0, 0, 0];  //' ' = 0
+const UInt8 FONT_MASKS_EXCL[]  = [0, 0, 0, 79, 79, 0, 0, 0];  //'!' = 1
+const UInt8 FONT_MASKS_DOUBLEQUOTE[] = [0, 7, 7, 0, 0, 7, 7, 0];  //'\" ] =2
+const UInt8 FONT_MASKS_POUND[] = [20, 127, 127, 20, 20, 127, 127, 20];  //'#' = 3
+const UInt8 FONT_MASKS_DOLLAR[] = [0, 36, 46, 107, 107, 58, 18, 0];  //'$' = 4
+const UInt8 FONT_MASKS_PERCENT[] = [0, 99, 51, 24, 12, 102, 99, 0];  //'%' = 5
+const UInt8 FONT_MASKS_AMPERSAND[] = [0, 50, 127, 77, 77, 119, 114, 80];  //'&' = 6
+const UInt8 FONT_MASKS_SINGLEQUOTE[] = [0, 0, 0, 7, 7, 0, 0, 0];  //'\' ] =7
+const UInt8 FONT_MASKS_OPENPAREN[] = [0, 0, 28, 62, 99, 65, 0, 0];  //'(' = 8
+const UInt8 FONT_MASKS_CLOSEPAREN[] = [0, 0, 65, 99, 62, 28, 0, 0];  //')' = 9
+const UInt8 FONT_MASKS_ASTERIX[] = [8, 42, 62, 28, 28, 62, 42, 8];  //'*' = 10
+const UInt8 FONT_MASKS_PLUS[] = [0, 8, 8, 62, 62, 8, 8, 0];  //'+' = 11
+const UInt8 FONT_MASKS_COMMA[] = [0, 0, 128, 224, 96, 0, 0, 0];  //',' = 12
+const UInt8 FONT_MASKS_MINUS[] = [0, 8, 8, 8, 8, 8, 8, 0];  //'-' = 13
+const UInt8 FONT_MASKS_PERIOD[] = [0, 0, 0, 96, 96, 0, 0, 0];  //'.' = 14
+const UInt8 FONT_MASKS_SLASH[] = [0, 64, 96, 48, 24, 12, 6, 2];  //'/' = 15
+const UInt8 FONT_MASKS_0[] = [0, 62, 127, 73, 69, 127, 62, 0];  //'0' = 16
+const UInt8 FONT_MASKS_1[] = [0, 64, 68, 127, 127, 64, 64, 0];  //'1' = 17
+const UInt8 FONT_MASKS_2[] = [0, 98, 115, 81, 73, 79, 70, 0];  //'2' = 18
+const UInt8 FONT_MASKS_3[] = [0, 34, 99, 73, 73, 127, 54, 0];  //'3' = 19
+const UInt8 FONT_MASKS_4[] = [0, 24, 24, 20, 22, 127, 127, 16];  //'4' = 20
+const UInt8 FONT_MASKS_5[] = [0, 39, 103, 69, 69, 125, 57, 0];  //'5' = 21
+const UInt8 FONT_MASKS_6[] = [0, 62, 127, 73, 73, 123, 50, 0];  //'6' = 22
+const UInt8 FONT_MASKS_7[] = [0, 3, 3, 121, 125, 7, 3, 0];  //'7' = 23
+const UInt8 FONT_MASKS_8[] = [0, 54, 127, 73, 73, 127, 54, 0];  //'8' = 24
+const UInt8 FONT_MASKS_9[] = [0, 38, 111, 73, 73, 127, 62, 0];  //'9' = 25
+const UInt8 FONT_MASKS_COLON[] = [0, 0, 0, 36, 36, 0, 0, 0];  //':' = 26
+const UInt8 FONT_MASKS_SEMICOLON[] = [0, 0, 128, 228, 100, 0, 0, 0];  //';' = 27;
+const UInt8 FONT_MASKS_LT[] = [0, 8, 28, 54, 99, 65, 65, 0];  //'<' = 28
+const UInt8 FONT_MASKS_EQ[] = [0, 20, 20, 20, 20, 20, 20, 0];  //'=' = 29
+const UInt8 FONT_MASKS_GT[] = [0, 65, 65, 99, 54, 28, 8, 0];  //'>' = 30
+const UInt8 FONT_MASKS_QUESTION[] = [0, 2, 3, 81, 89, 15, 6, 0];  //'?' = 31
+const UInt8 FONT_MASKS_AT[] = [0, 62, 127, 65, 77, 79, 46, 0];  //'@' = 32
+const UInt8 FONT_MASKS_A[] = [0, 124, 126, 11, 11, 126, 124, 0];  //'A' = 33
+const UInt8 FONT_MASKS_B[] = [0, 127, 127, 73, 73, 127, 54, 0];  //'B' = 34
+const UInt8 FONT_MASKS_C[] = [0, 62, 127, 65, 65, 99, 34, 0];  //'C' = 35
+const UInt8 FONT_MASKS_D[] = [0, 127, 127, 65, 99, 62, 28, 0];  //'D' = 36
+const UInt8 FONT_MASKS_E[] = [0, 127, 127, 73, 73, 65, 65, 0];  //'E' = 37
+const UInt8 FONT_MASKS_F[] = [0, 127, 127, 9, 9, 1, 1, 0];  //'F' = 38
+const UInt8 FONT_MASKS_G[] = [0, 62, 127, 65, 73, 123, 58, 0];  //'G' = 39
+const UInt8 FONT_MASKS_H[] = [0, 127, 127, 8, 8, 127, 127, 0];  //'H' = 40
+const UInt8 FONT_MASKS_I[] = [0, 0, 65, 127, 127, 65, 0, 0];  //'I' = 41
+const UInt8 FONT_MASKS_J[] = [0, 32, 96, 65, 127, 63, 1, 0];  //'J' = 42
+const UInt8 FONT_MASKS_K[] = [0, 127, 127, 28, 54, 99, 65, 0];  //'K' = 43
+const UInt8 FONT_MASKS_L[] = [0, 127, 127, 64, 64, 64, 64, 0];  //'L' = 44
+const UInt8 FONT_MASKS_M[] = [0, 127, 127, 6, 12, 6, 127, 127];  //'M' = 45
+const UInt8 FONT_MASKS_N[] = [0, 127, 127, 14, 28, 127, 127, 0];  //'N' = 46
+const UInt8 FONT_MASKS_O[] = [0, 62, 127, 65, 65, 127, 62, 0];  //'O' = 47
+const UInt8 FONT_MASKS_P[] = [0, 127, 127, 9, 9, 15, 6, 0];  //'P' = 48
+const UInt8 FONT_MASKS_Q[] = [0, 30, 63, 33, 97, 127, 94, 0];  //'Q' = 49
+const UInt8 FONT_MASKS_R[] = [0, 127, 127, 25, 57, 111, 70, 0];  //'R' = 50
+const UInt8 FONT_MASKS_S[] = [0, 38, 111, 73, 73, 123, 50, 0];  //'S' = 51
+const UInt8 FONT_MASKS_T[] = [0, 1, 1, 127, 127, 1, 1, 0];  //'T' = 52
+const UInt8 FONT_MASKS_U[] = [0, 63, 127, 64, 64, 127, 63, 0];  //'U' = 53
+const UInt8 FONT_MASKS_V[] = [0, 31, 63, 96, 96, 63, 31, 0];  //'V' = 54
+const UInt8 FONT_MASKS_W[] = [0, 127, 127, 48, 24, 48, 127, 127];  //'W' = 55
+const UInt8 FONT_MASKS_X[] = [0, 99, 119, 28, 28, 119, 99, 0];  //'X' = 56
+const UInt8 FONT_MASKS_Y[] = [0, 7, 15, 120, 120, 15, 7, 0];  //'Y' = 57
+const UInt8 FONT_MASKS_Z[] = [0, 97, 113, 89, 77, 71, 67, 0];  //'Z' = 58
+const UInt8 FONT_MASKS_OPENSQRBRACE[] = [0, 0, 127, 127, 65, 65, 0, 0];  //'[' = 59
+const UInt8 FONT_MASKS_BACKSLASH[] = [0, 2, 6, 12, 24, 48, 96, 64];  //'\\ ] =60
+const UInt8 FONT_MASKS_CLOSESQRBRACE[] = [0, 0, 65, 65, 127, 127, 0, 0];  //']' = 61
+const UInt8 FONT_MASKS_POWER[] = [0, 4, 6, 3, 3, 6, 4, 0];  //'^' = 62
+const UInt8 FONT_MASKS_UNDERSCORE[] = [0, 128, 128, 128, 128, 128, 128, 128];  //'_' = 63
+const UInt8 FONT_MASKS_TICK[] = [0, 0, 0, 1, 3, 6, 4, 0];  //'`' = 64
+const UInt8 FONT_MASKS_a[] = [0, 32, 116, 84, 84, 124, 120, 0];  //'a' = 65
+const UInt8 FONT_MASKS_b[] = [0, 126, 126, 72, 72, 120, 48, 0];  //'b' = 66
+const UInt8 FONT_MASKS_c[] = [0, 56, 124, 68, 68, 68, 0, 0];  //'c' = 67
+const UInt8 FONT_MASKS_d[] = [0, 48, 120, 72, 72, 126, 126, 0];  //'d' = 68
+const UInt8 FONT_MASKS_e[] = [0, 56, 124, 84, 84, 92, 24, 0];  //'e' = 69
+const UInt8 FONT_MASKS_f[] = [0, 0, 8, 124, 126, 10, 10, 0];  //'f' = 70
+const UInt8 FONT_MASKS_g[] = [0, 152, 188, 164, 164, 252, 124, 0];  //'g' = 71
+const UInt8 FONT_MASKS_h[] = [0, 126, 126, 8, 8, 120, 112, 0];  //'h' = 72
+const UInt8 FONT_MASKS_i[] = [0, 0, 72, 122, 122, 64, 0, 0];  //'i' = 73
+const UInt8 FONT_MASKS_j[] = [0, 0, 128, 128, 128, 250, 122, 0];  //'j' = 74
+const UInt8 FONT_MASKS_k[] = [0, 126, 126, 16, 56, 104, 64, 0];  //'k' = 75
+const UInt8 FONT_MASKS_l[] = [0, 0, 66, 126, 126, 64, 0, 0];  //'l' = 76
+const UInt8 FONT_MASKS_m[] = [0, 124, 124, 24, 56, 28, 124, 120];  //'m' = 77
+const UInt8 FONT_MASKS_n[] = [0, 124, 124, 4, 4, 124, 120, 0];  //'n' = 78
+const UInt8 FONT_MASKS_o[] = [0, 56, 124, 68, 68, 124, 56, 0];  //'o' = 79
+const UInt8 FONT_MASKS_p[] = [0, 252, 252, 36, 36, 60, 24, 0];  //'p' = 80
+const UInt8 FONT_MASKS_q[] = [0, 24, 60, 36, 36, 252, 252, 0];  //'q' = 81
+const UInt8 FONT_MASKS_r[] = [0, 124, 124, 4, 4, 12, 8, 0];  //'r' = 82
+const UInt8 FONT_MASKS_s[] = [0, 72, 92, 84, 84, 116, 36, 0];  //'s' = 83
+const UInt8 FONT_MASKS_t[] = [0, 4, 4, 62, 126, 68, 68, 0];  //'t' = 84
+const UInt8 FONT_MASKS_u[] = [0, 60, 124, 64, 64, 124, 124, 0];  //'u' = 85
+const UInt8 FONT_MASKS_v[] = [0, 28, 60, 96, 96, 60, 28, 0];  //'v' = 86
+const UInt8 FONT_MASKS_w[] = [0, 28, 124, 112, 56, 112, 124, 28];  //'w' = 87
+const UInt8 FONT_MASKS_x[] = [0, 68, 108, 56, 56, 108, 68, 0];  //'x' = 88
+const UInt8 FONT_MASKS_y[] = [0, 156, 188, 160, 224, 124, 60, 0];  //'y' = 89
+const UInt8 FONT_MASKS_z[] = [0, 68, 100, 116, 92, 76, 68, 0];  //'z' = 90
+const UInt8 FONT_MASKS_CURLYBRACEOPEN[] = [0, 0, 8, 62, 119, 65, 0, 0];  //'{' = 91
+const UInt8 FONT_MASKS_PIPE[] = [0, 0, 0, 127, 127, 0, 0, 0];  //'|' = 92
+const UInt8 FONT_MASKS_CURLYBRACECLOSE[] = [0, 0, 65, 119, 62, 8, 0, 0];  //'}' = 93
+const UInt8 FONT_MASKS_TILDE[] = [0, 8, 4, 12, 24, 1, 8, 0];   //'~' = 93
 
 
 function UInt8[String][8] getCharMasks() {
   UInt8 dictionary[String][8];
-  dictionary[' ' ] = CHAR_MASK_SPACE; 
-  dictionary['!' ] = CHAR_MASK_EXCL; 
-  dictionary['"' ] = CHAR_MASK_DOUBLEQUOTE; 
-  dictionary['#' ] = CHAR_MASK_POUND; 
-  dictionary['$' ] = CHAR_MASK_DOLLAR; 
-  dictionary['%' ] = CHAR_MASK_PERCENT; 
-  dictionary['&' ] = CHAR_MASK_AMPERSAND; 
-  dictionary["'" ] = CHAR_MASK_SINGLEQUOTE;
-  dictionary['(' ] = CHAR_MASK_OPENPAREN; 
-  dictionary[')' ] = CHAR_MASK_CLOSEPAREN; 
-  dictionary['*' ] = CHAR_MASK_ASTERIX; 
-  dictionary['+' ] = CHAR_MASK_PLUS; 
-  dictionary[',' ] = CHAR_MASK_COMMA; 
-  dictionary['-' ] = CHAR_MASK_MINUS; 
-  dictionary['.' ] = CHAR_MASK_PERIOD; 
-  dictionary['/' ] = CHAR_MASK_SLASH; 
-  dictionary['0' ] = CHAR_MASK_0; 
-  dictionary['1' ] = CHAR_MASK_1; 
-  dictionary['2' ] = CHAR_MASK_2; 
-  dictionary['3' ] = CHAR_MASK_3; 
-  dictionary['4' ] = CHAR_MASK_4; 
-  dictionary['5' ] = CHAR_MASK_5; 
-  dictionary['6' ] = CHAR_MASK_6; 
-  dictionary['7' ] = CHAR_MASK_7; 
-  dictionary['8' ] = CHAR_MASK_8; 
-  dictionary['9' ] = CHAR_MASK_9; 
-  dictionary[':' ] = CHAR_MASK_COLON; 
-  dictionary[';' ] = CHAR_MASK_SEMICOLON; 
-  dictionary['<' ] = CHAR_MASK_LT; 
-  dictionary['=' ] = CHAR_MASK_EQ; 
-  dictionary['>' ] = CHAR_MASK_GT; 
-  dictionary['?' ] = CHAR_MASK_QUESTION; 
-  dictionary['@' ] = CHAR_MASK_AT; 
-  dictionary['A' ] = CHAR_MASK_A; 
-  dictionary['B' ] = CHAR_MASK_B; 
-  dictionary['C' ] = CHAR_MASK_C; 
-  dictionary['D' ] = CHAR_MASK_D; 
-  dictionary['E' ] = CHAR_MASK_E; 
-  dictionary['F' ] = CHAR_MASK_F; 
-  dictionary['G' ] = CHAR_MASK_G; 
-  dictionary['H' ] = CHAR_MASK_H; 
-  dictionary['I' ] = CHAR_MASK_I; 
-  dictionary['J' ] = CHAR_MASK_J; 
-  dictionary['K' ] = CHAR_MASK_K; 
-  dictionary['L' ] = CHAR_MASK_L; 
-  dictionary['M' ] = CHAR_MASK_M; 
-  dictionary['N' ] = CHAR_MASK_N; 
-  dictionary['O' ] = CHAR_MASK_O; 
-  dictionary['P' ] = CHAR_MASK_P; 
-  dictionary['Q' ] = CHAR_MASK_Q; 
-  dictionary['R' ] = CHAR_MASK_R; 
-  dictionary['S' ] = CHAR_MASK_S; 
-  dictionary['T' ] = CHAR_MASK_T; 
-  dictionary['U' ] = CHAR_MASK_U; 
-  dictionary['V' ] = CHAR_MASK_V; 
-  dictionary['W' ] = CHAR_MASK_W; 
-  dictionary['X' ] = CHAR_MASK_X; 
-  dictionary['Y' ] = CHAR_MASK_Y; 
-  dictionary['Z' ] = CHAR_MASK_Z; 
-  dictionary['[' ] = CHAR_MASK_OPENSQRBRACE; 
-  dictionary['\\'] = CHAR_MASK_BACKSLASH; 
-  dictionary[']' ] = CHAR_MASK_CLOSESQRBRACE; 
-  dictionary['^' ] = CHAR_MASK_POWER; 
-  dictionary['_' ] = CHAR_MASK_UNDERSCORE; 
-  dictionary['`' ] = CHAR_MASK_TICK; 
-  dictionary['a' ] = CHAR_MASK_a; 
-  dictionary['b' ] = CHAR_MASK_b; 
-  dictionary['c' ] = CHAR_MASK_c; 
-  dictionary['d' ] = CHAR_MASK_d; 
-  dictionary['e' ] = CHAR_MASK_e; 
-  dictionary['f' ] = CHAR_MASK_f; 
-  dictionary['g' ] = CHAR_MASK_g; 
-  dictionary['h' ] = CHAR_MASK_h; 
-  dictionary['i' ] = CHAR_MASK_i; 
-  dictionary['j' ] = CHAR_MASK_j; 
-  dictionary['k' ] = CHAR_MASK_k; 
-  dictionary['l' ] = CHAR_MASK_l; 
-  dictionary['m' ] = CHAR_MASK_m; 
-  dictionary['n' ] = CHAR_MASK_n; 
-  dictionary['o' ] = CHAR_MASK_o; 
-  dictionary['p' ] = CHAR_MASK_p; 
-  dictionary['q' ] = CHAR_MASK_q; 
-  dictionary['r' ] = CHAR_MASK_r; 
-  dictionary['s' ] = CHAR_MASK_s; 
-  dictionary['t' ] = CHAR_MASK_t; 
-  dictionary['u' ] = CHAR_MASK_u; 
-  dictionary['v' ] = CHAR_MASK_v; 
-  dictionary['w' ] = CHAR_MASK_w; 
-  dictionary['x' ] = CHAR_MASK_x; 
-  dictionary['y' ] = CHAR_MASK_y; 
-  dictionary['z' ] = CHAR_MASK_z; 
-  dictionary['{' ] = CHAR_MASK_CURLYBRACEOPEN; 
-  dictionary['|' ] = CHAR_MASK_PIPE; 
-  dictionary['}' ] = CHAR_MASK_CURLYBRACECLOSE; 
-  dictionary['~' ] = CHAR_MASK_TILDE; 
+  dictionary[' ' ] = FONT_MASKS_SPACE; 
+  dictionary['!' ] = FONT_MASKS_EXCL; 
+  dictionary['"' ] = FONT_MASKS_DOUBLEQUOTE; 
+  dictionary['#' ] = FONT_MASKS_POUND; 
+  dictionary['$' ] = FONT_MASKS_DOLLAR; 
+  dictionary['%' ] = FONT_MASKS_PERCENT; 
+  dictionary['&' ] = FONT_MASKS_AMPERSAND; 
+  dictionary["'" ] = FONT_MASKS_SINGLEQUOTE;
+  dictionary['(' ] = FONT_MASKS_OPENPAREN; 
+  dictionary[')' ] = FONT_MASKS_CLOSEPAREN; 
+  dictionary['*' ] = FONT_MASKS_ASTERIX; 
+  dictionary['+' ] = FONT_MASKS_PLUS; 
+  dictionary[',' ] = FONT_MASKS_COMMA; 
+  dictionary['-' ] = FONT_MASKS_MINUS; 
+  dictionary['.' ] = FONT_MASKS_PERIOD; 
+  dictionary['/' ] = FONT_MASKS_SLASH; 
+  dictionary['0' ] = FONT_MASKS_0; 
+  dictionary['1' ] = FONT_MASKS_1; 
+  dictionary['2' ] = FONT_MASKS_2; 
+  dictionary['3' ] = FONT_MASKS_3; 
+  dictionary['4' ] = FONT_MASKS_4; 
+  dictionary['5' ] = FONT_MASKS_5; 
+  dictionary['6' ] = FONT_MASKS_6; 
+  dictionary['7' ] = FONT_MASKS_7; 
+  dictionary['8' ] = FONT_MASKS_8; 
+  dictionary['9' ] = FONT_MASKS_9; 
+  dictionary[':' ] = FONT_MASKS_COLON; 
+  dictionary[';' ] = FONT_MASKS_SEMICOLON; 
+  dictionary['<' ] = FONT_MASKS_LT; 
+  dictionary['=' ] = FONT_MASKS_EQ; 
+  dictionary['>' ] = FONT_MASKS_GT; 
+  dictionary['?' ] = FONT_MASKS_QUESTION; 
+  dictionary['@' ] = FONT_MASKS_AT; 
+  dictionary['A' ] = FONT_MASKS_A; 
+  dictionary['B' ] = FONT_MASKS_B; 
+  dictionary['C' ] = FONT_MASKS_C; 
+  dictionary['D' ] = FONT_MASKS_D; 
+  dictionary['E' ] = FONT_MASKS_E; 
+  dictionary['F' ] = FONT_MASKS_F; 
+  dictionary['G' ] = FONT_MASKS_G; 
+  dictionary['H' ] = FONT_MASKS_H; 
+  dictionary['I' ] = FONT_MASKS_I; 
+  dictionary['J' ] = FONT_MASKS_J; 
+  dictionary['K' ] = FONT_MASKS_K; 
+  dictionary['L' ] = FONT_MASKS_L; 
+  dictionary['M' ] = FONT_MASKS_M; 
+  dictionary['N' ] = FONT_MASKS_N; 
+  dictionary['O' ] = FONT_MASKS_O; 
+  dictionary['P' ] = FONT_MASKS_P; 
+  dictionary['Q' ] = FONT_MASKS_Q; 
+  dictionary['R' ] = FONT_MASKS_R; 
+  dictionary['S' ] = FONT_MASKS_S; 
+  dictionary['T' ] = FONT_MASKS_T; 
+  dictionary['U' ] = FONT_MASKS_U; 
+  dictionary['V' ] = FONT_MASKS_V; 
+  dictionary['W' ] = FONT_MASKS_W; 
+  dictionary['X' ] = FONT_MASKS_X; 
+  dictionary['Y' ] = FONT_MASKS_Y; 
+  dictionary['Z' ] = FONT_MASKS_Z; 
+  dictionary['[' ] = FONT_MASKS_OPENSQRBRACE; 
+  dictionary['\\'] = FONT_MASKS_BACKSLASH; 
+  dictionary[']' ] = FONT_MASKS_CLOSESQRBRACE; 
+  dictionary['^' ] = FONT_MASKS_POWER; 
+  dictionary['_' ] = FONT_MASKS_UNDERSCORE; 
+  dictionary['`' ] = FONT_MASKS_TICK; 
+  dictionary['a' ] = FONT_MASKS_a; 
+  dictionary['b' ] = FONT_MASKS_b; 
+  dictionary['c' ] = FONT_MASKS_c; 
+  dictionary['d' ] = FONT_MASKS_d; 
+  dictionary['e' ] = FONT_MASKS_e; 
+  dictionary['f' ] = FONT_MASKS_f; 
+  dictionary['g' ] = FONT_MASKS_g; 
+  dictionary['h' ] = FONT_MASKS_h; 
+  dictionary['i' ] = FONT_MASKS_i; 
+  dictionary['j' ] = FONT_MASKS_j; 
+  dictionary['k' ] = FONT_MASKS_k; 
+  dictionary['l' ] = FONT_MASKS_l; 
+  dictionary['m' ] = FONT_MASKS_m; 
+  dictionary['n' ] = FONT_MASKS_n; 
+  dictionary['o' ] = FONT_MASKS_o; 
+  dictionary['p' ] = FONT_MASKS_p; 
+  dictionary['q' ] = FONT_MASKS_q; 
+  dictionary['r' ] = FONT_MASKS_r; 
+  dictionary['s' ] = FONT_MASKS_s; 
+  dictionary['t' ] = FONT_MASKS_t; 
+  dictionary['u' ] = FONT_MASKS_u; 
+  dictionary['v' ] = FONT_MASKS_v; 
+  dictionary['w' ] = FONT_MASKS_w; 
+  dictionary['x' ] = FONT_MASKS_x; 
+  dictionary['y' ] = FONT_MASKS_y; 
+  dictionary['z' ] = FONT_MASKS_z; 
+  dictionary['{' ] = FONT_MASKS_CURLYBRACEOPEN; 
+  dictionary['|' ] = FONT_MASKS_PIPE; 
+  dictionary['}' ] = FONT_MASKS_CURLYBRACECLOSE; 
+  dictionary['~' ] = FONT_MASKS_TILDE; 
   return dictionary;
 }
+
+
+
+
+
+
+
+
+
+
+// function test_print_char(String char, UInt8[String][8] font) {
+//   for (Size col=0; col<8; col++) {
+//     String line;
+//     for (Size row=0; row<8; row++) {
+//       Boolean pixel_on = font[char][ row ] & (UInt8(1) << col);
+//       line += pixel_on ? "#" : " ";
+//     }
+//     report( line );
+//   }
+// }
+
+
+// /// \dfgPresetOmit
+// const UInt8 LD_MODE_S_VECTOR = 0;
+// /// \dfgPresetOmit
+// const UInt8 LD_MODE_S_POSTRAIL = 1;
+// /// \dfgPresetOmit
+// const UInt8 LD_MODE_S_POSDOT = 2;
+
+object LittleDrawString : LittleDraw {
+  String payload;
+  Color color;
+  UInt8 mode;
+  UInt8 pointSize;
+};
+
+/// \dfgPresetTitle LittleDrawString
+/// \dfgPresetCombo mode ("Vector", "Vector Normalized")
+/// \dfgPresetDefault mode 0
+/// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
+function LittleDrawString(UInt8 mode, String payload, Color color, UInt8 pointSize, LittleDraw other) {
+  this.payload = payload;
+  this.color = color;
+  this.other = other;
+  this.pointSize = pointSize;
+}
+
+/// \dfgPresetOmit
+inline LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {
+}
+
+inline Boolean font_pixel_on(UInt8[8] character, UInt8 row, UInt8 column) {
+  return character[ row ] & (UInt8(1) << column);
+}
+
+/// \dfgPresetOmit
+function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, Vec3 pos) {
+  UInt8 font[String][8] = getCharMasks();
+  Size count = points.pointCount();
+
+  Size new;
+  for (Size i=0; i<this.payload.length(); i++) { 
+    UInt8 char[8] = font[this.payload[i]];
+    for (UInt8 col=0; col<8; col++) {
+      for (UInt8 row=0; row<8; row++) {
+        if (font_pixel_on(char, row, col))
+          new++;
+      }
+    }
+    // break;
+  }
+  points.resize(count + new);
+  Vec3Attribute positions = points.getAttributes().positionsAttribute;
+  Size new_it;
+
+  Vec3 scale(0.033, 0.033, 0.033);
+  for (Size i=0; i<this.payload.length(); i++) { 
+    UInt8 char[8] = font[this.payload[i]];
+    for (UInt8 col=0; col<8; col++) {
+      for (UInt8 row=0; row<8; row++) {
+        if (font_pixel_on(char, row, col)) {
+          positions.values[count + new_it] = pos - (Vec3(row, col, 0.0) * scale/8) - Vec3(1.0, 0.0, 0.0)*scale*i;
+          vc.values[count + new_it] = this.color;
+          psizes.values[count + new_it] = this.pointSize;
+          new_it++;
+        }
+      }
+    }
+    // break;
+  }
+}
+
 
 

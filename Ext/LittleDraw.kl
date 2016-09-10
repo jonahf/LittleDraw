@@ -249,20 +249,6 @@ inline LittleDrawAxis.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc
 }
 
 
-
-//
-// LittleDrawAxis type
-//
-
-object LittleDrawText : LittleDraw {
-  String payload;
-  Color color;
-  UInt8 mode;
-};
-
-
-
-
 //
 // Create Geometry
 //
@@ -294,9 +280,9 @@ function LitteDraw_createGeometry(LittleDraw jobs[], Geometry geo, io Points deb
           Ref<LittleDrawColor>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
           Ref<LittleDrawColor>(job).createPoints(points, pointsVCAttr, pointsSizesAttr, posAttr.values[i]);
           break;
-        case LittleDrawText:
-          Ref<LittleDrawText>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
-          Ref<LittleDrawText>(job).createPoints(points, pointsVCAttr, pointsSizesAttr, posAttr.values[i]);
+        case LittleDrawString:
+          Ref<LittleDrawString>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
+          Ref<LittleDrawString>(job).createPoints(points, pointsVCAttr, pointsSizesAttr, posAttr.values[i]);
           break;
         case LittleDraw:
           break;

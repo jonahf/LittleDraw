@@ -1,0 +1,31 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "FONT_MASKS_PERIOD",
+  "ports" : [
+    {
+      "objectType" : "ExecPort",
+      "name" : "exec",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "Execute"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "value",
+      "nodePortType" : "In",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt8"
+      }
+    ],
+  "extDeps" : {
+    "LittleDraw" : "*"
+    },
+  "presetGUID" : "BD4D5BEFC4E3A02C9ED79B0125C795E6",
+  "code" : "require LittleDraw;
+
+dfgEntry {
+  value = FONT_MASKS_PERIOD;
+}
+"
+  }

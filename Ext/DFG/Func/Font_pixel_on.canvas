@@ -1,0 +1,55 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Supported types:\n  character: UInt8[8]\n  row: UInt8\n  column: UInt8\n  result: Boolean\n"
+    },
+  "title" : "Font_pixel_on",
+  "ports" : [
+    {
+      "objectType" : "ExecPort",
+      "name" : "exec",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "Execute"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "character",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "UInt8[8]"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "row",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "UInt8"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "column",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "UInt8"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "result",
+      "nodePortType" : "In",
+      "execPortType" : "Out",
+      "typeSpec" : "Boolean"
+      }
+    ],
+  "extDeps" : {
+    "LittleDraw" : "*"
+    },
+  "presetGUID" : "754EFC4B3EBC7670CF1A7456E5548CF4",
+  "code" : "require LittleDraw;
+
+dfgEntry {
+  result = font_pixel_on(character, row, column);
+}
+"
+  }
