@@ -3,11 +3,12 @@
 require LittleDraw;
 
 
-function test_print_char(String char, UInt8[String][8] font) {
+function test_print_char(String char) {
+  UInt8 masks[8] = getCharMask(char);
   for (Size i=0; i<8; i++) {
     String line;
     for (Size j=0; j<8; j++) {
-      Boolean pixel_on = font[char][ j ] & (UInt8(1) << i);
+      Boolean pixel_on = masks[j] & (UInt8(1) << i);
       line += pixel_on ? "#" : " ";
     }
     report( line );
@@ -33,10 +34,14 @@ operator entry() {
 
 
   UInt8 font[String][8] = getCharMasks();
-  test_print_char("A", font);
+  test_print_char("A");
 
   String line = "hello people, my name is JONAH";
   for (Size i=0; i<line.length(); i++) {
-    test_print_char(line[i], font);
+    test_print_char(line[i]);
   } 
 }
+
+
+
+

@@ -2,9 +2,9 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  character: UInt8[8]\n  col: UInt8\n  row: UInt8\n  result: Boolean\n"
+    "uiTooltip" : "Supported types:\n  character: String\n  result: UInt8[8]\n"
     },
-  "title" : "Font_pixel_on",
+  "title" : "GetCharMask",
   "ports" : [
     {
       "objectType" : "ExecPort",
@@ -18,38 +18,24 @@
       "name" : "character",
       "nodePortType" : "Out",
       "execPortType" : "In",
-      "typeSpec" : "UInt8[8]"
-      },
-    {
-      "objectType" : "ExecPort",
-      "name" : "col",
-      "nodePortType" : "Out",
-      "execPortType" : "In",
-      "typeSpec" : "UInt8"
-      },
-    {
-      "objectType" : "ExecPort",
-      "name" : "row",
-      "nodePortType" : "Out",
-      "execPortType" : "In",
-      "typeSpec" : "UInt8"
+      "typeSpec" : "String"
       },
     {
       "objectType" : "ExecPort",
       "name" : "result",
       "nodePortType" : "In",
       "execPortType" : "Out",
-      "typeSpec" : "Boolean"
+      "typeSpec" : "UInt8[8]"
       }
     ],
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "99D246F1721EB76C37FA0A47B2B2C50C",
+  "presetGUID" : "5D009484312FC0F3EF441EA34689CD7F",
   "code" : "require LittleDraw;
 
 dfgEntry {
-  result = font_pixel_on(character, col, row);
+  result = getCharMask(character);
 }
 "
   }

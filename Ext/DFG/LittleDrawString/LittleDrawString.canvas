@@ -16,7 +16,7 @@
     {
       "objectType" : "ExecPort",
       "metadata" : {
-        "uiCombo" : "(\"Dots\")"
+        "uiCombo" : "(\"Dots with trail\")"
         },
       "name" : "mode",
       "nodePortType" : "Out",
