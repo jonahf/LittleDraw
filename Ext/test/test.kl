@@ -4,11 +4,12 @@ require LittleDraw;
 
 
 function test_print_char(String char) {
-  UInt8 masks[8] = getCharMask(char);
+  UInt8 mask[8] = getCharMask(char);
   for (Size i=0; i<8; i++) {
     String line;
     for (Size j=0; j<8; j++) {
-      Boolean pixel_on = masks[j] & (UInt8(1) << i);
+      // Boolean pixel_on = mask[j] & (UInt8(1) << i);
+      Boolean pixel_on = font_pixel_on(mask, j, i);
       line += pixel_on ? "#" : " ";
     }
     report( line );

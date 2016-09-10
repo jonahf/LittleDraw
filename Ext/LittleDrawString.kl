@@ -448,7 +448,7 @@ inline LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> 
 
 /// \internal
 inline Boolean font_pixel_on(UInt8[8] character, UInt8 col, UInt8 row) {
-  return character[ col ] & (UInt8(1) << row-1);
+  return character[ col ] & (UInt8(1) << row);
 }
 
 /// \dfgPresetOmit
