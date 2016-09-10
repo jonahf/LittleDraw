@@ -2,6 +2,18 @@
 
 require LittleDraw;
 
+
+function test_print_char(String char, UInt8[String][8] font) {
+  for (Size i=0; i<8; i++) {
+    String line;
+    for (Size j=0; j<8; j++) {
+      Boolean pixel_on = font[char][ j ] & (UInt8(1) << i);
+      line += pixel_on ? "#" : " ";
+    }
+    report( line );
+  }
+}
+
 operator entry() {
   report("LittleDraw required.");
   report("LittleDraw required.");
@@ -18,4 +30,13 @@ operator entry() {
   report("LittleDraw required.");
   report("LittleDraw required.");
   report("LittleDraw required.");
+
+
+  UInt8 font[String][8] = getCharMasks();
+  test_print_char("A", font);
+
+  String line = "hello people, my name is JONAH";
+  for (Size i=0; i<line.length(); i++) {
+    test_print_char(line[i], font);
+  } 
 }
