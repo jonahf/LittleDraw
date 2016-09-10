@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: String\n  color: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawString\n"
+    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: String\n  offset: Vec3\n  ori: Quat\n  scale: Scalar\n  color: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawString\n"
     },
   "title" : "LittleDrawString",
   "ports" : [
@@ -16,7 +16,7 @@
     {
       "objectType" : "ExecPort",
       "metadata" : {
-        "uiCombo" : "(\"Vector\", \"Vector Normalized\")"
+        "uiCombo" : "(\"Dots\")"
         },
       "name" : "mode",
       "nodePortType" : "Out",
@@ -32,6 +32,36 @@
       "nodePortType" : "Out",
       "execPortType" : "In",
       "typeSpec" : "String"
+      },
+    {
+      "objectType" : "ExecPort",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
+        },
+      "name" : "offset",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "Vec3"
+      },
+    {
+      "objectType" : "ExecPort",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 0,\n  \"g\" : 191,\n  \"b\" : 232\n  }"
+        },
+      "name" : "ori",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "Quat"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "scale",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "Scalar" : 0.1000000014901161
+        },
+      "execPortType" : "In",
+      "typeSpec" : "Scalar"
       },
     {
       "objectType" : "ExecPort",
@@ -76,11 +106,11 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "E757A5C58E9DA72514B389A3CE84FED6",
+  "presetGUID" : "119B510BB81F7149382572694E7B527F",
   "code" : "require LittleDraw;
 
 dfgEntry {
-  result = LittleDrawString(mode, payload, color, pointSize, other);
+  result = LittleDrawString(mode, payload, offset, ori, scale, color, pointSize, other);
 }
 "
   }
