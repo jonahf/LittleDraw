@@ -502,7 +502,7 @@ private inline LittleDrawString.setContextPointFlag!(Boolean value) {
 /// \dfgPresetOmit
 function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, Vec3 pos) {
   if (this.getContextPointFlag())
-    LittleDraw_AddColoredPoint(pos, 3.5, this.color, points, vc, psizes);
+    LittleDraw_AddColoredPoint(pos, this.pointSize, this.color, points, vc, psizes);
 
   if (!this.getTextAsDotsFlag())
     return;
