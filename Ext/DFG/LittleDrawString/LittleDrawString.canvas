@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: String\n  offset: Vec3\n  ori: Quat\n  scale: Scalar\n  color: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawString\n"
+    "uiTooltip" : "Supported types:\n  mode: UInt8\n  trail: Boolean\n  translationRelative: Boolean\n  payload: String\n  translate: Vec3\n  ori: Quat\n  scale: Scalar\n  color: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawString\n"
     },
   "title" : "LittleDrawString",
   "ports" : [
@@ -28,6 +28,20 @@
       },
     {
       "objectType" : "ExecPort",
+      "name" : "trail",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "Boolean"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "translationRelative",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "Boolean"
+      },
+    {
+      "objectType" : "ExecPort",
       "name" : "payload",
       "nodePortType" : "Out",
       "execPortType" : "In",
@@ -38,7 +52,7 @@
       "metadata" : {
         "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
         },
-      "name" : "offset",
+      "name" : "translate",
       "nodePortType" : "Out",
       "execPortType" : "In",
       "typeSpec" : "Vec3"
@@ -106,11 +120,11 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "119B510BB81F7149382572694E7B527F",
+  "presetGUID" : "135E423872BBAFD133E7E62EDAA872F6",
   "code" : "require LittleDraw;
 
 dfgEntry {
-  result = LittleDrawString(mode, payload, offset, ori, scale, color, pointSize, other);
+  result = LittleDrawString(mode, trail, translationRelative, payload, translate, ori, scale, color, pointSize, other);
 }
 "
   }

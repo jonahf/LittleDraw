@@ -414,45 +414,87 @@ function UInt8[8] getCharMask(String character) {
   return FONT_MASKS_SPACE;
 }
 
+/// \internal
+inline Boolean font_pixel_on(UInt8[8] character, UInt8 col, UInt8 row) {
+  return character[ col ] & (UInt8(1) << row);
+}
+
+
+/// \dfgPresetOmit
+const UInt8 LD_MODE_STR_DOTS_OFFSET = 0;
+/// \dfgPresetOmit
+const UInt8 LD_MODE_STR = 1;
 
 object LittleDrawString : LittleDraw {
   String payload;
   Xfo xfo;
   Color color;
-  UInt8 mode;
+  // UInt8 mode;
+  UInt8 modeMask;
   UInt8 pointSize;
 };
 
 
 // Text drawing based on maCText, kindly contributed by by Marc Albrecht
 /// \dfgPresetTitle LittleDrawString
-/// \dfgPresetCombo mode ("Dots with trail")
+/// \dfgPresetCombo mode ("Hash lines", "Dots with trail")
 /// \dfgPresetDefault mode 0
+/// \dfgPresetDefault trail true
+/// \dfgPresetDefault translationRelative true
 /// \dfgPresetDefault scale 0.1
 /// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
-function LittleDrawString(UInt8 mode, String payload, Vec3 offset, Quat ori, Scalar scale, Color color, UInt8 pointSize, LittleDraw other) {
+function LittleDrawString(UInt8 mode, Boolean trail, Boolean translationRelative, 
+                          String payload, Vec3 translate, Quat ori, Scalar scale, Color color, UInt8 pointSize, 
+                          LittleDraw other) {
   this.payload = payload;
-  this.xfo = Xfo(offset, ori, Vec3(scale, scale, scale));
+  this.xfo = Xfo(translate, ori, Vec3(scale, scale, scale)/100);
   this.color = color;
-  this.other = other;
+  // this.mode = mode;
   this.pointSize = pointSize;
+  this.other = other;
+
+  this.setDotsFlag(false);
+  this.setTrailFlag(trail);
+  this.setTranslateFlag(translationRelative);
 }
 
-/// \dfgPresetOmit
-inline LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {
-  LittleDraw_addColoredLine(pos, pos + this.xfo.tr,
-                            this.color*0.5, this.color*0.75, 
-                            lines, vc);
-
+private inline Boolean LittleDrawString.getModeBit(UInt8 bit) {
+  return this.modeMask & (1 << bit);
+}
+private inline LittleDrawString.setModeBit!(UInt8 bit, Boolean value) {
+  this.modeMask = this.modeMask & ~(1 << bit);
+  if (value)
+    this.modeMask = this.modeMask | (1 << bit);
 }
 
-/// \internal
-inline Boolean font_pixel_on(UInt8[8] character, UInt8 col, UInt8 row) {
-  return character[ col ] & (UInt8(1) << row);
+private inline Boolean LittleDrawString.getDotsFlag() {
+  return this.getModeBit(0);
 }
+private inline LittleDrawString.setDotsFlag!(Boolean value) {
+  this.setModeBit(0, value);
+}
+
+private inline Boolean LittleDrawString.getTrailFlag() {
+  return this.getModeBit(1);
+}
+private inline LittleDrawString.setTrailFlag!(Boolean value) {
+  this.setModeBit(1, value);
+}
+
+private inline Boolean LittleDrawString.getOffsetFlag() {
+  return this.getModeBit(2);
+}
+private inline LittleDrawString.setTranslateFlag!(Boolean value) {
+  this.setModeBit(2, value);
+}
+
+
 
 /// \dfgPresetOmit
 function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, Vec3 pos) {
+  if (!this.getDotsFlag())
+    return;
+
   Size new, new_it, count = points.pointCount();
 
   for (Size i=0; i<this.payload.length(); i++) { 
@@ -466,14 +508,16 @@ function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttrib
     // break;
   }
   points.resize(count + new);
+  Vec3 offset = this.getOffsetFlag() ? pos : Vec3();
   Vec3Attribute positions = points.getAttributes().positionsAttribute;
   for (Size i=0; i<this.payload.length(); i++) { 
     UInt8 char_mask[8] = getCharMask(this.payload[i]);
     for (UInt8 row=0; row<8; row++) {
       for (UInt8 col=0; col<8; col++) {
         if (font_pixel_on(char_mask, col, row)) {
-          Vec3 ppos = Vec3(col + i*8, -Scalar(row) + 8, 0);
-          positions.values[count + new_it] = this.xfo.transformVector(ppos) + pos;
+          // Vec3 ppos = Vec3(col + i*8, -Scalar(row) + 8, 0);
+          Vec3 ppos = this.getPos(i, row, col);
+          positions.values[count + new_it] = this.xfo.transformVector(ppos) + offset;
           vc.values[count + new_it] = this.color;
           psizes.values[count + new_it] = this.pointSize * 0.5;
           new_it++;
@@ -483,5 +527,53 @@ function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttrib
   }
 }
 
+inline private Vec3 LittleDrawString.getPos(Size index, UInt8 row, UInt8 column) {
+  return Vec3(column + index*8, -Scalar(row) + 8, 0);
+}
+
+/// \dfgPresetOmit
+function LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {
+  Vec3 offset = this.getOffsetFlag() ? pos : Vec3();
+
+  if (this.getTrailFlag()) {
+    // Vec3 end = this.xfo.tr + (this.getOffsetFlag() ? pos : Vec3());
+    LittleDraw_addColoredLine(pos, this.xfo.tr + offset, this.color*0.5, this.color*0.75, lines, vc);
+  } 
+
+  if (!this.getDotsFlag()) {    
+    UInt8 last_col = 128;
+    Boolean line_in_progress;
+
+    for (Size i=0; i<this.payload.length(); i++) { 
+      UInt8 char_mask[8] = getCharMask(this.payload[i]);
+      for (UInt8 row=0; row<8; row++) {
+        for (UInt8 col=0; col<8; col++) {
+          Boolean pixel_on = font_pixel_on(char_mask, col, row);
+          // Boolean drawLine = (last_col == col - 1);
+
+          // if (!pixel_on || row == 7) {
+          //   if (line_in_progress) {
+          //     Vec3 start = this.xfo.transformVector( this.getPos(i, row, col) );
+          //     Vec3 end = this.xfo.transformVector( this.getPos(i, row, last_col) );
+          //     LittleDraw_addColoredLine(start, end, this.color, this.color, lines, vc);
+          //   }
+          // }
+          // line_in_progress = (last_col == col - 1);
+          if (last_col == col - 1) {
+            Vec3 start = this.xfo.transformVector( this.getPos(i, row, col) );
+            Vec3 end = this.xfo.transformVector( this.getPos(i, row, last_col) );
+            LittleDraw_addColoredLine(start, end, this.color, this.color, lines, vc);
+          }
+          if (pixel_on)
+            last_col = col;
+          else
+            last_col = 128;
+        }
+      }
+    }
+
+
+  }
+}
 
 
