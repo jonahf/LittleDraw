@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  mode: UInt8\n  trail: Boolean\n  translationRelative: Boolean\n  payload: String\n  translate: Vec3\n  ori: Quat\n  scale: Scalar\n  color: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawString\n"
+    "uiTooltip" : "Supported types:\n  mode: UInt8\n  trail: Boolean\n  translationRelative: Boolean\n  drawContextPoint: Boolean\n  payload: String\n  translate: Vec3\n  ori: Quat\n  scale: Scalar\n  color: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawString\n"
     },
   "title" : "LittleDrawString",
   "ports" : [
@@ -16,7 +16,7 @@
     {
       "objectType" : "ExecPort",
       "metadata" : {
-        "uiCombo" : "(\"Dots with trail\")"
+        "uiCombo" : "(\"Hash lines\", \"Dots with trail\")"
         },
       "name" : "mode",
       "nodePortType" : "Out",
@@ -30,6 +30,9 @@
       "objectType" : "ExecPort",
       "name" : "trail",
       "nodePortType" : "Out",
+      "defaultValues" : {
+        "Boolean" : true
+        },
       "execPortType" : "In",
       "typeSpec" : "Boolean"
       },
@@ -37,6 +40,19 @@
       "objectType" : "ExecPort",
       "name" : "translationRelative",
       "nodePortType" : "Out",
+      "defaultValues" : {
+        "Boolean" : true
+        },
+      "execPortType" : "In",
+      "typeSpec" : "Boolean"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "drawContextPoint",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "Boolean" : true
+        },
       "execPortType" : "In",
       "typeSpec" : "Boolean"
       },
@@ -120,11 +136,11 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "135E423872BBAFD133E7E62EDAA872F6",
+  "presetGUID" : "CFA1D39B05A210422CDCBF7E7ED56642",
   "code" : "require LittleDraw;
 
 dfgEntry {
-  result = LittleDrawString(mode, trail, translationRelative, payload, translate, ori, scale, color, pointSize, other);
+  result = LittleDrawString(mode, trail, translationRelative, drawContextPoint, payload, translate, ori, scale, color, pointSize, other);
 }
 "
   }

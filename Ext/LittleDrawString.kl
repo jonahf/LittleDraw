@@ -441,9 +441,10 @@ object LittleDrawString : LittleDraw {
 /// \dfgPresetDefault mode 0
 /// \dfgPresetDefault trail true
 /// \dfgPresetDefault translationRelative true
+/// \dfgPresetDefault drawContextPoint true
 /// \dfgPresetDefault scale 0.1
 /// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
-function LittleDrawString(UInt8 mode, Boolean trail, Boolean translationRelative, 
+function LittleDrawString(UInt8 mode, Boolean trail, Boolean translationRelative, Boolean drawContextPoint, 
                           String payload, Vec3 translate, Quat ori, Scalar scale, Color color, UInt8 pointSize, 
                           LittleDraw other) {
   this.payload = payload;
@@ -453,9 +454,10 @@ function LittleDrawString(UInt8 mode, Boolean trail, Boolean translationRelative
   this.pointSize = pointSize;
   this.other = other;
 
-  this.setDotsFlag(false);
+  this.setTextAsDotsFlag(mode == 1);
   this.setTrailFlag(trail);
-  this.setTranslateFlag(translationRelative);
+  this.setRelativeFlag(translationRelative);
+  this.setContextPointFlag(drawContextPoint);
 }
 
 private inline Boolean LittleDrawString.getModeBit(UInt8 bit) {
@@ -467,10 +469,10 @@ private inline LittleDrawString.setModeBit!(UInt8 bit, Boolean value) {
     this.modeMask = this.modeMask | (1 << bit);
 }
 
-private inline Boolean LittleDrawString.getDotsFlag() {
+private inline Boolean LittleDrawString.getTextAsDotsFlag() {
   return this.getModeBit(0);
 }
-private inline LittleDrawString.setDotsFlag!(Boolean value) {
+private inline LittleDrawString.setTextAsDotsFlag!(Boolean value) {
   this.setModeBit(0, value);
 }
 
@@ -481,18 +483,28 @@ private inline LittleDrawString.setTrailFlag!(Boolean value) {
   this.setModeBit(1, value);
 }
 
-private inline Boolean LittleDrawString.getOffsetFlag() {
+private inline Boolean LittleDrawString.getRelativeFlag() {
   return this.getModeBit(2);
 }
-private inline LittleDrawString.setTranslateFlag!(Boolean value) {
+private inline LittleDrawString.setRelativeFlag!(Boolean value) {
   this.setModeBit(2, value);
+}
+
+private inline Boolean LittleDrawString.getContextPointFlag() {
+  return this.getModeBit(3);
+}
+private inline LittleDrawString.setContextPointFlag!(Boolean value) {
+  this.setModeBit(3, value);
 }
 
 
 
 /// \dfgPresetOmit
 function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, Vec3 pos) {
-  if (!this.getDotsFlag())
+  if (this.getContextPointFlag())
+    LittleDraw_AddColoredPoint(pos, 3.5, this.color, points, vc, psizes);
+
+  if (!this.getTextAsDotsFlag())
     return;
 
   Size new, new_it, count = points.pointCount();
@@ -508,7 +520,7 @@ function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttrib
     // break;
   }
   points.resize(count + new);
-  Vec3 offset = this.getOffsetFlag() ? pos : Vec3();
+  Vec3 offset = this.getRelativeFlag() ? pos : Vec3();
   Vec3Attribute positions = points.getAttributes().positionsAttribute;
   for (Size i=0; i<this.payload.length(); i++) { 
     UInt8 char_mask[8] = getCharMask(this.payload[i]);
@@ -533,46 +545,58 @@ inline private Vec3 LittleDrawString.getPos(Size index, UInt8 row, UInt8 column)
 
 /// \dfgPresetOmit
 function LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {
-  Vec3 offset = this.getOffsetFlag() ? pos : Vec3();
+  Vec3 offset = this.getRelativeFlag() ? pos : Vec3();
 
-  if (this.getTrailFlag()) {
-    // Vec3 end = this.xfo.tr + (this.getOffsetFlag() ? pos : Vec3());
+  if (this.getTrailFlag())
     LittleDraw_addColoredLine(pos, this.xfo.tr + offset, this.color*0.5, this.color*0.75, lines, vc);
-  } 
 
-  if (!this.getDotsFlag()) {    
-    UInt8 last_col = 128;
-    Boolean line_in_progress;
+  if (!this.getTextAsDotsFlag()) {    
+    UInt8 line_start = 0;
+    Boolean last_pixel_on = false;
 
-    for (Size i=0; i<this.payload.length(); i++) { 
+    for (Size i=0; i<this.payload.length(); i++) {
       UInt8 char_mask[8] = getCharMask(this.payload[i]);
+      // do row line segments
       for (UInt8 row=0; row<8; row++) {
         for (UInt8 col=0; col<8; col++) {
           Boolean pixel_on = font_pixel_on(char_mask, col, row);
-          // Boolean drawLine = (last_col == col - 1);
 
-          // if (!pixel_on || row == 7) {
-          //   if (line_in_progress) {
-          //     Vec3 start = this.xfo.transformVector( this.getPos(i, row, col) );
-          //     Vec3 end = this.xfo.transformVector( this.getPos(i, row, last_col) );
-          //     LittleDraw_addColoredLine(start, end, this.color, this.color, lines, vc);
-          //   }
-          // }
-          // line_in_progress = (last_col == col - 1);
-          if (last_col == col - 1) {
-            Vec3 start = this.xfo.transformVector( this.getPos(i, row, col) );
-            Vec3 end = this.xfo.transformVector( this.getPos(i, row, last_col) );
-            LittleDraw_addColoredLine(start, end, this.color, this.color, lines, vc);
+          Boolean at_end = col == 7;
+          Boolean last_was_single = last_pixel_on && (line_start == col - 1);
+          if (last_pixel_on && (!pixel_on || at_end) && !last_was_single ) {
+            Vec3 start = this.getPos(i, row, line_start);
+            Vec3 end = this.getPos(i, row, col - (pixel_on ? 0 : 1));
+            LittleDraw_addColoredLine(this.xfo.transformVector(start) + offset, 
+              this.xfo.transformVector(end) + offset, this.color, this.color, lines, vc);
           }
-          if (pixel_on)
-            last_col = col;
-          else
-            last_col = 128;
+          if (!last_pixel_on && pixel_on)
+            line_start = col;
+          last_pixel_on = pixel_on;
         }
+        last_pixel_on = false;
       }
+      // do column line segments
+      for (UInt8 col=0; col<8; col++) {
+        for (UInt8 row=0; row<8; row++) {
+          Boolean pixel_on = font_pixel_on(char_mask, col, row);
+
+          Boolean at_end = row == 7;
+          Boolean last_was_single = last_pixel_on && (line_start == row - 1);
+          if (last_pixel_on && (!pixel_on || at_end) && !last_was_single ) {
+            Vec3 start = this.getPos(i, line_start, col);
+            Vec3 end =   this.getPos(i, row - (pixel_on ? 0 : 1), col);
+            LittleDraw_addColoredLine(this.xfo.transformVector(start) + offset, 
+              this.xfo.transformVector(end) + offset, this.color, this.color, lines, vc);
+          }
+          if (!last_pixel_on && pixel_on)
+            line_start = row;
+          last_pixel_on = pixel_on;
+        }
+        last_pixel_on = false;
+      }
+
+
     }
-
-
   }
 }
 
