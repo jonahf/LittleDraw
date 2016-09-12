@@ -16,7 +16,7 @@
     {
       "objectType" : "ExecPort",
       "metadata" : {
-        "uiCombo" : "(\"Hash lines\", \"Dots with trail\")"
+        "uiCombo" : "(\"Hash lines\", \"Dots\")"
         },
       "name" : "mode",
       "nodePortType" : "Out",

@@ -7,16 +7,16 @@
 //
 // For example [1, 2, 4, 8, 16, 0, 0, 255] would draw this:
 // Columns:
-// 01234567
+// 0 1 2 3 4 5 6 7
 //
-// #      #
-//  #     #
-//   #    #
-//    #   #
-//     #  #
-//        #
-//        #
-//        #
+// #             #
+//   #           #
+//     #         #
+//       #       #
+//         #     #
+//               #
+//               #
+//               #
 //
 
 
@@ -211,8 +211,8 @@ const UInt8 FONT_MASKS_CURLYBRACECLOSE[] = [0, 0, 65, 119, 62, 8, 0, 0];
 /// \internal
 const UInt8 FONT_MASKS_TILDE[] = [0, 8, 4, 12, 24, 1, 8, 0];  
 
-
-function UInt8[String][8] getCharMaskDict() {
+/// \dfgPresetOmit
+function UInt8[String][8] LDS_getCharMaskDict() {
   UInt8 dictionary[String][8];
   dictionary[' ' ] = FONT_MASKS_SPACE; 
   dictionary['!' ] = FONT_MASKS_EXCL; 
@@ -312,7 +312,8 @@ function UInt8[String][8] getCharMaskDict() {
   return dictionary;
 }
 
-function UInt8[8] getCharMask(String character) {
+/// \dfgPresetOmit
+function UInt8[8] LDS_getCharMask(String character) {
   switch (character) {
     case '{' : return FONT_MASKS_CURLYBRACEOPEN; 
     case '}' : return FONT_MASKS_CURLYBRACECLOSE; 
@@ -415,29 +416,22 @@ function UInt8[8] getCharMask(String character) {
 }
 
 /// \internal
-inline Boolean font_pixel_on(UInt8[8] character, UInt8 col, UInt8 row) {
+inline Boolean LDS_pixelIsOn(UInt8[8] character, UInt8 col, UInt8 row) {
   return character[ col ] & (UInt8(1) << row);
 }
-
-
-/// \dfgPresetOmit
-const UInt8 LD_MODE_STR_DOTS_OFFSET = 0;
-/// \dfgPresetOmit
-const UInt8 LD_MODE_STR = 1;
 
 object LittleDrawString : LittleDraw {
   String payload;
   Xfo xfo;
   Color color;
-  // UInt8 mode;
-  UInt8 modeMask;
+  private UInt8 modeMask;
   UInt8 pointSize;
 };
 
 
 // Text drawing based on maCText, kindly contributed by by Marc Albrecht
 /// \dfgPresetTitle LittleDrawString
-/// \dfgPresetCombo mode ("Hash lines", "Dots with trail")
+/// \dfgPresetCombo mode ("Hash lines", "Dots")
 /// \dfgPresetDefault mode 0
 /// \dfgPresetDefault trail true
 /// \dfgPresetDefault translationRelative true
@@ -498,6 +492,14 @@ private inline LittleDrawString.setContextPointFlag!(Boolean value) {
 }
 
 
+private inline Vec3 LittleDrawString.getPos(Size index, UInt8 row, UInt8 column) {
+  return Vec3(column + index*8, -Scalar(row) + 8, 0);
+}
+
+private inline Vec3 LittleDrawString.getXformedPos(Size index, UInt8 row, UInt8 column) {
+  return this.xfo.transformVector(this.getPos(index, row, column));
+}
+
 
 /// \dfgPresetOmit
 function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, Vec3 pos) {
@@ -507,13 +509,13 @@ function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttrib
   if (!this.getTextAsDotsFlag())
     return;
 
-  Size new, new_it, count = points.pointCount();
+  Size new, newIt, count = points.pointCount();
 
   for (Size i=0; i<this.payload.length(); i++) { 
-    UInt8 char_mask[8] = getCharMask(this.payload[i]);
+    UInt8 charmask[8] = LDS_getCharMask(this.payload[i]);
     for (UInt8 row=0; row<8; row++) {
       for (UInt8 col=0; col<8; col++) {
-        if (font_pixel_on(char_mask, col, row))
+        if (LDS_pixelIsOn(charmask, col, row))
           new++;
       }
     }
@@ -523,24 +525,18 @@ function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttrib
   Vec3 offset = this.getRelativeFlag() ? pos : Vec3();
   Vec3Attribute positions = points.getAttributes().positionsAttribute;
   for (Size i=0; i<this.payload.length(); i++) { 
-    UInt8 char_mask[8] = getCharMask(this.payload[i]);
+    UInt8 charmask[8] = LDS_getCharMask(this.payload[i]);
     for (UInt8 row=0; row<8; row++) {
       for (UInt8 col=0; col<8; col++) {
-        if (font_pixel_on(char_mask, col, row)) {
-          // Vec3 ppos = Vec3(col + i*8, -Scalar(row) + 8, 0);
-          Vec3 ppos = this.getPos(i, row, col);
-          positions.values[count + new_it] = this.xfo.transformVector(ppos) + offset;
-          vc.values[count + new_it] = this.color;
-          psizes.values[count + new_it] = this.pointSize * 0.5;
-          new_it++;
+        if (LDS_pixelIsOn(charmask, col, row)) {
+          positions.values[count + newIt] = this.getXformedPos(i, row, col) + offset;
+          vc.values[count + newIt] = this.color;
+          psizes.values[count + newIt] = this.pointSize * 0.5;
+          newIt++;
         }
       }
     }
   }
-}
-
-inline private Vec3 LittleDrawString.getPos(Size index, UInt8 row, UInt8 column) {
-  return Vec3(column + index*8, -Scalar(row) + 8, 0);
 }
 
 /// \dfgPresetOmit
@@ -551,53 +547,62 @@ function LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute
     LittleDraw_addColoredLine(pos, this.xfo.tr + offset, this.color*0.5, this.color*0.75, lines, vc);
 
   if (!this.getTextAsDotsFlag()) {    
-    UInt8 line_start = 0;
-    Boolean last_pixel_on = false;
+    Boolean segstate_lpo = false;
+    UInt8 segstate_ls = 0;
 
     for (Size i=0; i<this.payload.length(); i++) {
-      UInt8 char_mask[8] = getCharMask(this.payload[i]);
+      UInt8 charmask[8] = LDS_getCharMask(this.payload[i]);
       // do row line segments
       for (UInt8 row=0; row<8; row++) {
         for (UInt8 col=0; col<8; col++) {
-          Boolean pixel_on = font_pixel_on(char_mask, col, row);
-
-          Boolean at_end = col == 7;
-          Boolean last_was_single = last_pixel_on && (line_start == col - 1);
-          if (last_pixel_on && (!pixel_on || at_end) && !last_was_single ) {
-            Vec3 start = this.getPos(i, row, line_start);
-            Vec3 end = this.getPos(i, row, col - (pixel_on ? 0 : 1));
-            LittleDraw_addColoredLine(this.xfo.transformVector(start) + offset, 
-              this.xfo.transformVector(end) + offset, this.color, this.color, lines, vc);
+          Boolean pixelOn = LDS_pixelIsOn(charmask, col, row);
+          UInt8 segCoord[4] = this.findSegments(col, row, pixelOn, segstate_lpo, segstate_ls);
+          if (segCoord[0] != 255) {
+            Vec3 start = this.getXformedPos(i, segCoord[0], segCoord[1]) + offset;
+            Vec3 end = this.getXformedPos(i, segCoord[2], segCoord[3]) + offset;
+            LittleDraw_addColoredLine(start, end, this.color, this.color, lines, vc);
           }
-          if (!last_pixel_on && pixel_on)
-            line_start = col;
-          last_pixel_on = pixel_on;
         }
-        last_pixel_on = false;
       }
-      // do column line segments
       for (UInt8 col=0; col<8; col++) {
         for (UInt8 row=0; row<8; row++) {
-          Boolean pixel_on = font_pixel_on(char_mask, col, row);
-
-          Boolean at_end = row == 7;
-          Boolean last_was_single = last_pixel_on && (line_start == row - 1);
-          if (last_pixel_on && (!pixel_on || at_end) && !last_was_single ) {
-            Vec3 start = this.getPos(i, line_start, col);
-            Vec3 end =   this.getPos(i, row - (pixel_on ? 0 : 1), col);
-            LittleDraw_addColoredLine(this.xfo.transformVector(start) + offset, 
-              this.xfo.transformVector(end) + offset, this.color, this.color, lines, vc);
+          Boolean pixelOn = LDS_pixelIsOn(charmask, col, row);
+          UInt8 segCoord[4] = this.findSegments(row, col, pixelOn, segstate_lpo, segstate_ls);
+          if (segCoord[0] != 255) {
+            Vec3 start = this.getXformedPos(i, segCoord[1], segCoord[0]) + offset;
+            Vec3 end = this.getXformedPos(i, segCoord[3], segCoord[2]) + offset;
+            LittleDraw_addColoredLine(start, end, this.color, this.color, lines, vc);
           }
-          if (!last_pixel_on && pixel_on)
-            line_start = row;
-          last_pixel_on = pixel_on;
         }
-        last_pixel_on = false;
       }
-
-
     }
   }
+}
+
+private inline UInt8[4] LittleDrawString.findSegments(UInt8 xcoord, UInt8 ycoord, Boolean pixelOn,
+                                                     io Boolean state_lastPixelOn, io UInt8 state_lineStart) {
+  Boolean atStart = xcoord == 0;
+  Boolean atEnd = xcoord == 7;
+  UInt8 result[4];
+
+  if (atStart)
+    state_lastPixelOn = false;
+  
+  Boolean lastWasSingle = state_lastPixelOn && (state_lineStart == xcoord - 1);
+  if (state_lastPixelOn && (!pixelOn || atEnd) && !lastWasSingle ) {
+    result[0] = ycoord;
+    result[1] = state_lineStart;
+    result[2] = ycoord;
+    result[3] = xcoord - (pixelOn ? 0 : 1);
+  } else {
+    result[0] = 255;
+  }
+
+  if (!state_lastPixelOn && pixelOn)
+    state_lineStart = xcoord;
+  state_lastPixelOn = pixelOn;
+
+  return result;
 }
 
 
