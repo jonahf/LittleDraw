@@ -1,0 +1,44 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Supported types:\n  this: LittleDraw\n  pos: Vec3\n"
+    },
+  "title" : "SetContextPosition",
+  "ports" : [
+    {
+      "objectType" : "ExecPort",
+      "name" : "exec",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "Execute"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "this",
+      "nodePortType" : "IO",
+      "execPortType" : "IO",
+      "typeSpec" : "LittleDraw"
+      },
+    {
+      "objectType" : "ExecPort",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
+        },
+      "name" : "pos",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "Vec3"
+      }
+    ],
+  "extDeps" : {
+    "LittleDraw" : "*"
+    },
+  "presetGUID" : "8893D77A35CA4F44EAE906BABCC908B9",
+  "code" : "require LittleDraw;
+
+dfgEntry {
+  this.setContextPosition(pos);
+}
+"
+  }

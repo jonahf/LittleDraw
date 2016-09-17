@@ -500,9 +500,9 @@ private inline LittleDrawString.setContextPointFlag!(Boolean value) {
 
 
 /// \dfgPresetOmit
-function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, Vec3 pos) {
+function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes) {
   if (this.getContextPointFlag())
-    LittleDraw_AddColoredPoint(pos, this.pointSize, this.color, points, vc, psizes);
+    LittleDraw_AddColoredPoint(this.ctx, this.pointSize, this.color, points, vc, psizes);
 
   if (!this.getTextAsDotsFlag())
     return;
@@ -520,7 +520,7 @@ function LittleDrawString.createPoints(io Ref<Points> points, io Ref<ColorAttrib
     // break;
   }
   points.resize(count + new);
-  Vec3 offset = this.getRelativeFlag() ? pos : Vec3();
+  Vec3 offset = this.getRelativeFlag() ? this.ctx : Vec3();
   Vec3Attribute positions = points.getAttributes().positionsAttribute;
   for (Size i=0; i<this.payload.length(); i++) { 
     UInt8 char_mask[8] = getCharMask(this.payload[i]);
@@ -544,11 +544,11 @@ inline private Vec3 LittleDrawString.getPos(Size index, UInt8 row, UInt8 column)
 }
 
 /// \dfgPresetOmit
-function LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {
-  Vec3 offset = this.getRelativeFlag() ? pos : Vec3();
+function LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc) {
+  Vec3 offset = this.getRelativeFlag() ? this.ctx : Vec3();
 
   if (this.getTrailFlag())
-    LittleDraw_addColoredLine(pos, this.xfo.tr + offset, this.color*0.5, this.color*0.75, lines, vc);
+    LittleDraw_addColoredLine(this.ctx, this.xfo.tr + offset, this.color*0.5, this.color*0.75, lines, vc);
 
   if (!this.getTextAsDotsFlag()) {    
     UInt8 line_start = 0;

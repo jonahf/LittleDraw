@@ -6,22 +6,27 @@ const UInt8 LD_MODE_NONE = 255;
 
 /// \dfgPresetOmit
 interface LDJobInterface {
-  createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos);
-  createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> sizes, Vec3 pos);
+  createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc);
+  createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> sizes);
 };
 
 
 /// \dfgPresetOmit
 object LittleDraw : LDJobInterface {
+  Vec3 ctx;
   LittleDraw other;
 };
 
 /// \internal
-inline LittleDraw.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {}
+inline LittleDraw.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc) {}
 /// \internal
-inline LittleDraw.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> sizes, Vec3 pos) {}
+inline LittleDraw.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> sizes) {}
 
 
+inline LittleDraw.setContextPosition!(Vec3 pos) {
+  if (this != null)
+    this.ctx = pos;
+}
 
 
 //
@@ -91,15 +96,15 @@ function LittleDrawVector(UInt8 mode, Vec3 payload, Color color, UInt8 pointSize
 }
 
 /// \dfgPresetOmit
-inline LittleDrawVector.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {
+inline LittleDrawVector.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc) {
   switch (this.mode) {
     case LD_MODE_V_VECTOR:
-      LittleDraw_addColoredLine(pos, pos + this.payload, 
+      LittleDraw_addColoredLine(this.ctx, this.ctx + this.payload, 
                                 this.color*0.25, this.color, 
                                 lines, vc);
       break;
     case LD_MODE_V_POSTRAIL:
-      LittleDraw_addColoredLine(pos, this.payload, 
+      LittleDraw_addColoredLine(this.ctx, this.payload, 
                                 this.color*0.5, this.color*0.75, 
                                 lines, vc);
       break;
@@ -107,7 +112,7 @@ inline LittleDrawVector.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> 
 }
 
 /// \dfgPresetOmit
-inline LittleDrawVector.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, Vec3 pos) {
+inline LittleDrawVector.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes) {
   switch (this.mode) {
     case LD_MODE_V_POSTRAIL:
     case LD_MODE_V_POSDOT:
@@ -165,8 +170,8 @@ function LittleDrawColor(Vec3 payload, Scalar intensity, Boolean unit, Boolean n
 }
 
 /// \dfgPresetOmit
-inline LittleDrawColor.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, Vec3 pos) {
-  LittleDraw_AddColoredPoint(pos, this.pointSize, this.payload, points, vc, psizes);
+inline LittleDrawColor.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes) {
+  LittleDraw_AddColoredPoint(this.ctx, this.pointSize, this.payload, points, vc, psizes);
 }
 
 
@@ -232,14 +237,14 @@ function LittleDrawAxis(UInt8 mode, Xfo payload, Scalar scale, Color color, Litt
 
 
 /// \dfgPresetOmit
-inline LittleDrawAxis.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc, Vec3 pos) {
+inline LittleDrawAxis.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc) {
   Vec3 origin = this.payload.multiplyVector3(Vec3());
   Vec3 x = this.payload.multiplyVector3(Vec3(1, 0, 0));
   Vec3 y = this.payload.multiplyVector3(Vec3(0, 1, 0));
   Vec3 z = this.payload.multiplyVector3(Vec3(0, 0, 1));
   switch (this.mode) {
     case LD_MODE_A_AXIS_TRAIL:
-      LittleDraw_addColoredLine(pos, origin, this.color*0.50, this.color, lines, vc);
+      LittleDraw_addColoredLine(this.ctx, origin, this.color*0.50, this.color, lines, vc);
     case LD_MODE_A_AXIS:
       LittleDraw_addColoredLine(origin, x, this.color, Color(1.0, 0.0, 0.0), lines, vc);
       LittleDraw_addColoredLine(origin, y, this.color, Color(0.0, 1.0, 0.0), lines, vc);
@@ -253,10 +258,9 @@ inline LittleDrawAxis.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc
 // Create Geometry
 //
 
-function LitteDraw_createGeometry(LittleDraw jobs[], Geometry geo, io Points debugPoints, io Lines debugLines) {
+function LitteDraw_createGeometry(io LittleDraw jobs[], io Points debugPoints, io Lines debugLines) {
   Ref<Lines> lines = debugLines;
   Ref<Points> points = debugPoints;
-  Ref<Vec3Attribute> posAttr = geo.getAttributes().positionsAttribute;
   Ref<ColorAttribute> linesVCAttr = lines.getAttributes().getOrCreateColorAttribute("vertexColors");
   Ref<ColorAttribute> pointsVCAttr = points.getAttributes().getOrCreateColorAttribute("vertexColors");
   Ref<ScalarAttribute> pointsSizesAttr = points.getOrCreateSizesAttribute();
@@ -267,28 +271,27 @@ function LitteDraw_createGeometry(LittleDraw jobs[], Geometry geo, io Points deb
     while (job != null) {
       switch (job.type()) {
         // switched out by type to hopefully give the inliner a chance
-
         case LittleDrawVector:
-          Ref<LittleDrawVector>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
-          Ref<LittleDrawVector>(job).createPoints(points, pointsVCAttr, pointsSizesAttr, posAttr.values[i]);
+          Ref<LittleDrawVector>(job).createLines(lines, linesVCAttr);
+          Ref<LittleDrawVector>(job).createPoints(points, pointsVCAttr, pointsSizesAttr);
           break;
         case LittleDrawAxis:
-          Ref<LittleDrawAxis>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
-          Ref<LittleDrawAxis>(job).createPoints(points, pointsVCAttr, pointsSizesAttr, posAttr.values[i]);
+          Ref<LittleDrawAxis>(job).createLines(lines, linesVCAttr);
+          Ref<LittleDrawAxis>(job).createPoints(points, pointsVCAttr, pointsSizesAttr);
           break;
         case LittleDrawColor:
-          Ref<LittleDrawColor>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
-          Ref<LittleDrawColor>(job).createPoints(points, pointsVCAttr, pointsSizesAttr, posAttr.values[i]);
+          Ref<LittleDrawColor>(job).createLines(lines, linesVCAttr);
+          Ref<LittleDrawColor>(job).createPoints(points, pointsVCAttr, pointsSizesAttr);
           break;
         case LittleDrawString:
-          Ref<LittleDrawString>(job).createLines(lines, linesVCAttr, posAttr.values[i]);
-          Ref<LittleDrawString>(job).createPoints(points, pointsVCAttr, pointsSizesAttr, posAttr.values[i]);
+          Ref<LittleDrawString>(job).createLines(lines, linesVCAttr);
+          Ref<LittleDrawString>(job).createPoints(points, pointsVCAttr, pointsSizesAttr);
           break;
         case LittleDraw:
           break;
         default:
-          job.createLines(lines, linesVCAttr, posAttr.values[i]);
-          job.createPoints(points, pointsVCAttr, pointsSizesAttr, posAttr.values[i]);
+          job.createLines(lines, linesVCAttr);
+          job.createPoints(points, pointsVCAttr, pointsSizesAttr);
           break;
       }
       job = job.other;
