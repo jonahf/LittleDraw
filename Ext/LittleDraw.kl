@@ -244,11 +244,24 @@ inline LittleDrawAxis.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc
   Vec3 z = this.payload.multiplyVector3(Vec3(0, 0, 1));
   switch (this.mode) {
     case LD_MODE_A_AXIS_TRAIL:
-      LittleDraw_addColoredLine(this.ctx, origin, this.color*0.50, this.color, lines, vc);
+      LittleDraw_addColoredLine(this.ctx, origin, this.color*0.50, this.color*0.75, lines, vc);
     case LD_MODE_A_AXIS:
-      LittleDraw_addColoredLine(origin, x, this.color, Color(1.0, 0.0, 0.0), lines, vc);
-      LittleDraw_addColoredLine(origin, y, this.color, Color(0.0, 1.0, 0.0), lines, vc);
-      LittleDraw_addColoredLine(origin, z, this.color, Color(0.0, 0.0, 1.0), lines, vc);
+      LittleDraw_addColoredLine(origin, x, (this.color+Color(1.0, 0.0, 0.0))/2, Color(1.0, 0.0, 0.0), lines, vc);
+      LittleDraw_addColoredLine(origin, y, (this.color+Color(0.0, 1.0, 0.0))/2, Color(0.0, 1.0, 0.0), lines, vc);
+      LittleDraw_addColoredLine(origin, z, (this.color+Color(0.25, 0.25, 1.0))/2, Color(0.25, 0.25, 1.0), lines, vc);
+      break;
+  }
+}
+
+
+/// \dfgPresetOmit
+inline LittleDrawAxis.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes) {
+  Vec3 origin = this.payload.multiplyVector3(Vec3());
+  switch (this.mode) {
+    case LD_MODE_A_AXIS_TRAIL:
+      LittleDraw_AddColoredPoint(this.ctx, 5.0, this.color, points, vc, psizes);
+    case LD_MODE_A_AXIS:
+      LittleDraw_AddColoredPoint(origin, 5.0, this.color, points, vc, psizes);
       break;
   }
 }
