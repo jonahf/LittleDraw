@@ -190,13 +190,15 @@ object LittleDrawAxis : LittleDraw {
   Mat44 payload;
   Color color;
   UInt8 mode;
+  UInt8 pointSize;
 };
 
 /// \dfgPresetTitle LittleDrawAxisMat44
 /// \dfgPresetDefault color {'r':0.9, 'g':0.25, 'b':0.25, 'a':1.0}
 /// \dfgPresetDefault scale 1.0
 /// \dfgPresetCombo mode ("Axes", "Axes trail")
-function LittleDrawAxis(UInt8 mode, Mat44 payload, Scalar scale, Color color, LittleDraw other) {
+/// \dfgPresetDefault pointSize 5;
+function LittleDrawAxis(UInt8 mode, Mat44 payload, Scalar scale, Color color, UInt8 pointSize, LittleDraw other) {
   switch (mode) {
     case 0:
       this.mode = LD_MODE_A_AXIS;
@@ -211,13 +213,15 @@ function LittleDrawAxis(UInt8 mode, Mat44 payload, Scalar scale, Color color, Li
   sclMat.setScaling(scale);
   this.payload = payload * sclMat;  this.color = color;
   this.other = other;
+  this.pointSize = pointSize;
 }
 
 /// \dfgPresetTitle LittleDrawAxisXfo
 /// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
 /// \dfgPresetDefault scale 1.0
+/// \dfgPresetDefault pointSize 5;
 /// \dfgPresetCombo mode ("Axes", "Axes trail")
-function LittleDrawAxis(UInt8 mode, Xfo payload, Scalar scale, Color color, LittleDraw other) {
+function LittleDrawAxis(UInt8 mode, Xfo payload, Scalar scale, Color color, UInt8 pointSize, LittleDraw other) {
   switch (mode) {
     case 0:
       this.mode = LD_MODE_A_AXIS;
@@ -233,6 +237,7 @@ function LittleDrawAxis(UInt8 mode, Xfo payload, Scalar scale, Color color, Litt
   this.payload = payload.toMat44() * sclMat;
   this.color = color;
   this.other = other;
+  this.pointSize = pointSize;
 }
 
 
@@ -259,9 +264,9 @@ inline LittleDrawAxis.createPoints(io Ref<Points> points, io Ref<ColorAttribute>
   Vec3 origin = this.payload.multiplyVector3(Vec3());
   switch (this.mode) {
     case LD_MODE_A_AXIS_TRAIL:
-      LittleDraw_AddColoredPoint(this.ctx, 5.0, this.color, points, vc, psizes);
+      LittleDraw_AddColoredPoint(this.ctx, this.pointSize, this.color, points, vc, psizes);
     case LD_MODE_A_AXIS:
-      LittleDraw_AddColoredPoint(origin, 5.0, this.color, points, vc, psizes);
+      LittleDraw_AddColoredPoint(origin, this.pointSize, this.color, points, vc, psizes);
       break;
   }
 }
@@ -332,7 +337,7 @@ inline LittleDraw_AddColoredPoint(Vec3 pos, Scalar size, Color color,
                                   io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes) {
   points.addPoint(pos);
   vc.values[vc.size()-1] = color;
-  psizes.values[psizes.size()-1] = size;
+  psizes.values[psizes.size()-1] = size/2;
 }
 
 inline Color Vec3.toColor(Boolean unit, Boolean normalize) {

@@ -3,7 +3,7 @@
   "objectType" : "Func",
   "metadata" : {
     "uiNodeColor" : "{\n  \"r\" : 99,\n  \"g\" : 129,\n  \"b\" : 92\n  }",
-    "uiDocUrl" : "http://docs.fabric-engine.com/FabricEngine/2.3.1-auto-2016080717/HTML/KLExtensionsGuide/Math/Vec3.html",
+    "uiDocUrl" : "http://docs.fabric-engine.com/FabricEngine/2.3.1-auto-2016090117/HTML/KLExtensionsGuide/Math/Vec3.html",
     "uiTooltip" : "Supported types:\n  this: Vec3\n  unit: Boolean\n  normalize: Boolean\n  result: Color\n"
     },
   "title" : "ToColor",

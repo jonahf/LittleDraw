@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Mat44\n  scale: Scalar\n  color: Color\n  other: LittleDraw\n  result: LittleDrawAxis\n"
+    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Mat44\n  scale: Scalar\n  color: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawAxis\n"
     },
   "title" : "LittleDrawAxisMat44",
   "ports" : [
@@ -63,6 +63,16 @@
       },
     {
       "objectType" : "ExecPort",
+      "name" : "pointSize",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "UInt8" : 5
+        },
+      "execPortType" : "In",
+      "typeSpec" : "UInt8"
+      },
+    {
+      "objectType" : "ExecPort",
       "name" : "other",
       "nodePortType" : "Out",
       "execPortType" : "In",
@@ -79,11 +89,11 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "BEBC5DA3D47D60516F7BE9AC53EF4972",
+  "presetGUID" : "7E888D26BEE4DE3B1C080AFBC0B00192",
   "code" : "require LittleDraw;
 
 dfgEntry {
-  result = LittleDrawAxis(mode, payload, scale, color, other);
+  result = LittleDrawAxis(mode, payload, scale, color, pointSize, other);
 }
 "
   }
