@@ -7,17 +7,21 @@
 [FABRIC:MT] Registered extensions {LittleDraw:0.0.4,mactext:0.0.7,SimpLSystem:0.0.2} in directory: C:\Users\Jonah\development\fabric\extension_repos
 [FABRIC:MT] Registered extensions {FabricALEMBIC,FabricBULLET,FabricCIMG,FabricEXR,FabricFBX,FabricFILESTREAM,Geometry,FabricHDR,Images,FabricLIDAR,Math,FabricOBJ,FabricOPENCV,FabricOGL,FabricPNG,RTR,RTRAdaptors,FabricStringTools,FabricTEEM,FabricTGA,FabricVIDEO} in directory: C:\Program Files\Fabric Engine\\Exts
 [FABRIC:MT] IRCache: Not pruning since last prune was less than 24 hours ago
-[FABRIC:MT] Loaded extension Math in 257.868ms (cached)
-[FABRIC:MT] Loaded extension FabricSynchronization in 26.949ms (cached)
-[FABRIC:MT] Loaded extension FabricStatistics in 18.314ms (cached)
-[FABRIC:MT] Loaded extension Singletons in 2.527ms (cached)
-[FABRIC:MT] Loaded extension Util in 27.704ms (cached)
-[FABRIC:MT] Loaded extension Containers in 373.138ms (cached)
-[FABRIC:MT] Loaded extension Geometry in 593.862ms (cached)
-[FABRIC:MT] Loaded extension LittleDraw in 35.323ms (cached)
+[FABRIC:MT] Loaded extension Math in 252.278ms (cached)
+[FABRIC:MT] Loaded extension FabricSynchronization in 26.724ms (cached)
+[FABRIC:MT] Loaded extension FabricStatistics in 18.540ms (cached)
+[FABRIC:MT] Loaded extension Singletons in 2.346ms (cached)
+[FABRIC:MT] Loaded extension Util in 26.256ms (cached)
+[FABRIC:MT] Loaded extension Containers in 359.040ms (cached)
+[FABRIC:MT] Loaded extension Geometry in 580.689ms (cached)
+[FABRIC:MT] Loaded extension LittleDraw in 34.947ms (cached)
+registerFunction: thisType='(null)' func='function Boolean LittleDraw_GetModeBit( in UInt8 bitmask, in UInt8 bit )'
+  Skipped: isInternal()
+registerFunction: thisType='(null)' func='function LittleDraw_SetModeBit( io UInt8 bitmask, in UInt8 bit, in Boolean value )'
+  Skipped: isInternal()
 registerFunction: thisType='(null)' func='function LitteDraw_createGeometry( io LittleDraw jobs[], io Points debugPoints, io Lines debugLines )'
   Added to bin[normal][LitteDraw_createGeometry]
-registerFunction: thisType='(null)' func='function LittleDraw_addColoredLine( in Vec3 pos0, in Vec3 pos1, in Color color0, in Color color1, io Ref<Lines> lines, io Ref<ColorAttribute> vc )'
+registerFunction: thisType='(null)' func='function LittleDraw_AddColoredLine( in Vec3 pos0, in Vec3 pos1, in Color color0, in Color color1, io Ref<Lines> lines, io Ref<ColorAttribute> vc )'
   Skipped: isInternal()
 registerFunction: thisType='(null)' func='function LittleDraw_AddColoredPoint( in Vec3 pos, in Scalar size, in Color color, io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes )'
   Skipped: isInternal()

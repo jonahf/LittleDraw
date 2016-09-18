@@ -444,7 +444,6 @@ function LittleDrawString(UInt8 mode, Boolean trail, Boolean translationRelative
   this.payload = payload;
   this.xfo = Xfo(translate, ori, Vec3(scale, scale, scale)/100);
   this.color = color;
-  // this.mode = mode;
   this.pointSize = pointSize;
   this.other = other;
 
@@ -455,12 +454,10 @@ function LittleDrawString(UInt8 mode, Boolean trail, Boolean translationRelative
 }
 
 private inline Boolean LittleDrawString.getModeBit(UInt8 bit) {
-  return this.modeMask & (1 << bit);
+  return LittleDraw_GetModeBit(this.modeMask, bit);
 }
 private inline LittleDrawString.setModeBit!(UInt8 bit, Boolean value) {
-  this.modeMask = this.modeMask & ~(1 << bit);
-  if (value)
-    this.modeMask = this.modeMask | (1 << bit);
+  LittleDraw_SetModeBit(this.modeMask, bit, value);
 }
 
 private inline Boolean LittleDrawString.getTextAsDotsFlag() {
@@ -544,7 +541,7 @@ function LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute
   Vec3 offset = this.getRelativeFlag() ? this.ctx : Vec3();
 
   if (this.getTrailFlag())
-    LittleDraw_addColoredLine(this.ctx, this.xfo.tr + offset, this.color*0.5, this.color*0.75, lines, vc);
+    LittleDraw_AddColoredLine(this.ctx, this.xfo.tr + offset, this.color*0.5, this.color*0.75, lines, vc);
 
   if (!this.getTextAsDotsFlag()) {    
     Boolean segstate_lpo = false;
@@ -560,7 +557,7 @@ function LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute
           if (segCoord[0] != 255) {
             Vec3 start = this.getXformedPos(i, segCoord[0], segCoord[1]) + offset;
             Vec3 end = this.getXformedPos(i, segCoord[2], segCoord[3]) + offset;
-            LittleDraw_addColoredLine(start, end, this.color, this.color, lines, vc);
+            LittleDraw_AddColoredLine(start, end, this.color, this.color, lines, vc);
           }
         }
       }
@@ -571,7 +568,7 @@ function LittleDrawString.createLines(io Ref<Lines> lines, io Ref<ColorAttribute
           if (segCoord[0] != 255) {
             Vec3 start = this.getXformedPos(i, segCoord[1], segCoord[0]) + offset;
             Vec3 end = this.getXformedPos(i, segCoord[3], segCoord[2]) + offset;
-            LittleDraw_addColoredLine(start, end, this.color, this.color, lines, vc);
+            LittleDraw_AddColoredLine(start, end, this.color, this.color, lines, vc);
           }
         }
       }

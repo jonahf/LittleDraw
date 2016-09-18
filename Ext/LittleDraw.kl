@@ -11,6 +11,19 @@ interface LDJobInterface {
 };
 
 
+
+/// \internal
+inline Boolean LittleDraw_GetModeBit(UInt8 bitmask, UInt8 bit) {
+  return bitmask & (1 << bit);
+}
+/// \internal
+inline LittleDraw_SetModeBit(io UInt8 bitmask, UInt8 bit, Boolean value) {
+  bitmask = bitmask & ~(1 << bit);
+  if (value)
+    bitmask = bitmask | (1 << bit);
+}
+
+
 /// \dfgPresetOmit
 object LittleDraw : LDJobInterface {
   Vec3 ctx;
@@ -99,12 +112,12 @@ function LittleDrawVector(UInt8 mode, Vec3 payload, Color color, UInt8 pointSize
 inline LittleDrawVector.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc) {
   switch (this.mode) {
     case LD_MODE_V_VECTOR:
-      LittleDraw_addColoredLine(this.ctx, this.ctx + this.payload, 
+      LittleDraw_AddColoredLine(this.ctx, this.ctx + this.payload, 
                                 this.color*0.25, this.color, 
                                 lines, vc);
       break;
     case LD_MODE_V_POSTRAIL:
-      LittleDraw_addColoredLine(this.ctx, this.payload, 
+      LittleDraw_AddColoredLine(this.ctx, this.payload, 
                                 this.color*0.5, this.color*0.75, 
                                 lines, vc);
       break;
@@ -201,13 +214,13 @@ object LittleDrawAxis : LittleDraw {
 function LittleDrawAxis(UInt8 mode, Mat44 payload, Scalar scale, Color color, UInt8 pointSize, LittleDraw other) {
   switch (mode) {
     case 0:
-      this.mode = LD_MODE_A_AXIS;
+      LittleDraw_SetModeBit(this.mode, 0, true);
+      LittleDraw_SetModeBit(this.mode, 1, true);
       break;
     case 1:
-      this.mode = LD_MODE_A_AXIS_TRAIL;
+      LittleDraw_SetModeBit(this.mode, 0, true);
+      LittleDraw_SetModeBit(this.mode, 1, false);
       break;
-    default:
-      this.mode = LD_MODE_NONE;
   }
   Mat44 sclMat = Mat44();
   sclMat.setScaling(scale);
@@ -224,10 +237,14 @@ function LittleDrawAxis(UInt8 mode, Mat44 payload, Scalar scale, Color color, UI
 function LittleDrawAxis(UInt8 mode, Xfo payload, Scalar scale, Color color, UInt8 pointSize, LittleDraw other) {
   switch (mode) {
     case 0:
-      this.mode = LD_MODE_A_AXIS;
+      LittleDraw_SetModeBit(this.mode, 0, true);
+      LittleDraw_SetModeBit(this.mode, 1, true);
+      // this.mode = LD_MODE_A_AXIS;
       break;
     case 1:
-      this.mode = LD_MODE_A_AXIS_TRAIL;
+      LittleDraw_SetModeBit(this.mode, 0, true);
+      LittleDraw_SetModeBit(this.mode, 1, false);
+      // this.mode = LD_MODE_A_AXIS_TRAIL;
       break;
     default:
       this.mode = LD_MODE_NONE;
@@ -243,32 +260,33 @@ function LittleDrawAxis(UInt8 mode, Xfo payload, Scalar scale, Color color, UInt
 
 /// \dfgPresetOmit
 inline LittleDrawAxis.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc) {
+  if (!LittleDraw_GetModeBit(this.mode, 0))
+    return;
   Vec3 origin = this.payload.multiplyVector3(Vec3());
   Vec3 x = this.payload.multiplyVector3(Vec3(1, 0, 0));
   Vec3 y = this.payload.multiplyVector3(Vec3(0, 1, 0));
   Vec3 z = this.payload.multiplyVector3(Vec3(0, 0, 1));
-  switch (this.mode) {
-    case LD_MODE_A_AXIS_TRAIL:
-      LittleDraw_addColoredLine(this.ctx, origin, this.color*0.50, this.color*0.75, lines, vc);
-    case LD_MODE_A_AXIS:
-      LittleDraw_addColoredLine(origin, x, (this.color+Color(1.0, 0.0, 0.0))/2, Color(1.0, 0.0, 0.0), lines, vc);
-      LittleDraw_addColoredLine(origin, y, (this.color+Color(0.0, 1.0, 0.0))/2, Color(0.0, 1.0, 0.0), lines, vc);
-      LittleDraw_addColoredLine(origin, z, (this.color+Color(0.25, 0.25, 1.0))/2, Color(0.25, 0.25, 1.0), lines, vc);
-      break;
+
+  LittleDraw_AddColoredLine(this.ctx, origin, this.color*0.50, this.color*0.75, lines, vc);
+
+  if (LittleDraw_GetModeBit(this.mode, 1)) {
+    LittleDraw_AddColoredLine(origin, x, (this.color+Color(1.0, 0.0, 0.0))/2, Color(1.0, 0.0, 0.0), lines, vc);
+    LittleDraw_AddColoredLine(origin, y, (this.color+Color(0.0, 1.0, 0.0))/2, Color(0.0, 1.0, 0.0), lines, vc);
+    LittleDraw_AddColoredLine(origin, z, (this.color+Color(0.25, 0.25, 1.0))/2, Color(0.25, 0.25, 1.0), lines, vc);
   }
 }
 
 
 /// \dfgPresetOmit
 inline LittleDrawAxis.createPoints(io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes) {
+  if (!LittleDraw_GetModeBit(this.mode, 0))
+    return;
+
   Vec3 origin = this.payload.multiplyVector3(Vec3());
-  switch (this.mode) {
-    case LD_MODE_A_AXIS_TRAIL:
-      LittleDraw_AddColoredPoint(this.ctx, this.pointSize, this.color, points, vc, psizes);
-    case LD_MODE_A_AXIS:
-      LittleDraw_AddColoredPoint(origin, this.pointSize, this.color, points, vc, psizes);
-      break;
-  }
+  LittleDraw_AddColoredPoint(origin, this.pointSize, this.color, points, vc, psizes);
+
+  if (LittleDraw_GetModeBit(this.mode, 1))
+    LittleDraw_AddColoredPoint(this.ctx, this.pointSize, this.color, points, vc, psizes);
 }
 
 
@@ -314,8 +332,7 @@ function LitteDraw_createGeometry(io LittleDraw jobs[], io Points debugPoints, i
       }
       job = job.other;
     }
-  }
-  
+  }  
 }
 
 
@@ -325,7 +342,7 @@ function LitteDraw_createGeometry(io LittleDraw jobs[], io Points debugPoints, i
 
 
 /// \internal
-inline LittleDraw_addColoredLine(Vec3 pos0, Vec3 pos1, Color color0, Color color1, 
+inline LittleDraw_AddColoredLine(Vec3 pos0, Vec3 pos1, Color color0, Color color1, 
                                  io Ref<Lines> lines, io Ref<ColorAttribute> vc) {
   lines.addLine(pos0, pos1);
   vc.values[vc.size()-2] = color0;
