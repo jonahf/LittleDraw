@@ -1,0 +1,174 @@
+[FABRIC:MT] Fabric Engine version 2.3.1-auto-2016080717 (Aug 07 2016 21:47:28 UTC)
+[FABRIC:MT] GPU code will be compiled in guarded mode
+[FABRIC:MT] Loading DFG presets from c:\Users\jfriedman\development\fabric\builds\2.3.1.20160807.175527\Presets\DFG
+[FABRIC:MT] Loading DFG presets from C:\Users\jfriedman\Fabric\Presets
+[FABRIC:MT] Registered extensions {FabricArnold,HairLines:0.1.0,HairLinesToArnold:0.1.0,embree,Kraken:1.2.0,KrakenAnimation,KrakenForCanvas,LittleDraw:0.0.3,mactext:0.0.7,RiggingToolbox:2.0.0,KLNoise,OpenVDB,OpenVDBInlineDrawing,OpenVDBWrapper:1.0.0,Slavr:1.0.0} in directory: c:\Users\jfriedman\development\fabric\exts_repos
+[FABRIC:MT] Ignored extensions {FabricArnold,OpenVDB} in directory: c:\Users\jfriedman\development\fabric\exts_repos
+[FABRIC:MT] Registered extension {AlembicWrapper:1.5.1} in directory: c:\Users\jfriedman\development\fabric\depot\fabric_extensions\patch\2.3.0
+[FABRIC:MT] Registered extensions {Asslembic:0.3.0,Entwiner:0.4.0,FabricArnold:0.1.2,HairLines:0.4.0,HairLinesToArnold:0.2.0,JiggleMush:0.4.0,KLProcedural:0.4.0,PointInstancer:0.2.0,Presets:0.3.0,Psyline:0.4.0,PsyopUtil:0.4.0,PsyopUtilInternal:0.3.0,PsyUtil:0.4.0,Ruffleure:0.2.0,Scatter:0.4.0} in directory: c:\Users\jfriedman\development\fabric\depot\fabric_extensions\2.3.0
+[FABRIC:MT] Ignored extensions {Kraken:1.2.0,KrakenAnimation,KrakenForCanvas,RiggingToolbox:2.0.0} in directory: c:\Users\jfriedman\development\fabric\depot\fabric_extensions\2.3.0
+[FABRIC:MT] Registered extensions {Alembic:1.1.0,AlembicWrapper:1.5.0,Animation:1.1.0,AttributeHelpers:1.0.1,Bullet:1.0.2,BulletHelpers:1.0.0,Characters:1.2.0,Containers:1.2.0,DFGWrapper:1.2.0,FabricInterfaces:1.1.0,FabricSynchronization:1.2.0,Fbx:1.2.0,FbxHelpers:1.1.0,FileIO:1.3.1,Geometry:1.5.0,Images:1.1.0,InlineDrawing:1.5.0,JSON:1.1.0,LA:1.0.0,Manipulation:1.2.0,Math:1.4.0,FabricOBJ:1.1.0,OGLWrappers:1.1.0,FabricOGL:1.1.0,OpenImageIO:1.1.0,OSOGL:1.1.0,Parameters:1.1.0,Singletons:1.1.1,FabricStatistics:1.1.1,Util:1.3.0} in directory: c:\Users\jfriedman\development\fabric\builds\2.3.1.20160807.175527\Exts
+[FABRIC:MT] Ignored extension directory 'c:\Users\jfriedman\development\fabric\builds\2.3.1.20160807.175527\Tests\Exts': unable to open directory 'c:\Users\jfriedman\development\fabric\builds\2.3.1.20160807.175527\Tests\Exts': The system cannot find the path specified. (code 3 [0x3])
+[FABRIC:MT] Ignored extension directory 'c:\Users\jfriedman\development\fabric\builds\2.3.1.20160807.175527\Tests\SceneHub': unable to open directory 'c:\Users\jfriedman\development\fabric\builds\2.3.1.20160807.175527\Tests\SceneHub': The system cannot find the path specified. (code 3 [0x3])
+[FABRIC:MT] IRCache: Not pruning since last prune was less than 24 hours ago
+[FABRIC:MT] Requesting 'Compute' license.
+[FABRIC:MT] Licensed for Compute use to 'Psyop NY VM' until 30-sep-2016 (61/500 in use).
+[FABRIC:MT] Codegenned extension Math:1.4.0 in 34.510ms
+[FABRIC:MT] Loaded extension Math in 320.157ms (cached)
+[FABRIC:MT] Trying to load 'c:\Users\jfriedman\development\fabric\builds\2.3.1.20160807.175527\Exts\Builtin\FabricSynchronization\FabricSynchronization-Windows-x86_64.dll'
+[FABRIC:MT] Codegenned extension FabricSynchronization:1.2.0 in 5.023ms
+[FABRIC:MT] Loaded extension FabricSynchronization in 33.081ms (cached)
+[FABRIC:MT] Trying to load 'c:\Users\jfriedman\development\fabric\builds\2.3.1.20160807.175527\Exts\Builtin\Statistics\FabricStatistics-Windows-x86_64.dll'
+[FABRIC:MT] Codegenned extension FabricStatistics:1.1.1 in 3.694ms
+[FABRIC:MT] Loaded extension FabricStatistics in 21.946ms (cached)
+[FABRIC:MT] Trying to load 'c:\Users\jfriedman\development\fabric\builds\2.3.1.20160807.175527\Exts\Builtin\Singletons\Singletons-Windows-x86_64.dll'
+[FABRIC:MT] Codegenned extension Singletons:1.1.1 in 0.623ms
+[FABRIC:MT] Loaded extension Singletons in 4.349ms (cached)
+[FABRIC:MT] Trying to load 'c:\Users\jfriedman\development\fabric\builds\2.3.1.20160807.175527\Exts\Builtin\Util\Util-Windows-x86_64.dll'
+[FABRIC:MT] Codegenned extension Util:1.3.0 in 5.018ms
+[FABRIC:MT] Loaded extension Util in 32.439ms (cached)
+[FABRIC:MT] Codegenned extension Containers:1.2.0 in 67.872ms
+[FABRIC:MT] Loaded extension Containers in 590.027ms (cached)
+[FABRIC:MT] Codegenned extension Geometry:1.5.0 in 77.318ms
+[FABRIC:MT] Loaded extension Geometry in 830.982ms (cached)
+[FABRIC:MT] Codegenned extension LittleDraw:0.0.3 in 5.029ms
+[FABRIC:MT] Loaded extension LittleDraw in 44.274ms (cached)
+registerFunction: thisType='(null)' func='function LitteDraw_createGeometry( in LittleDraw jobs[], in Geometry geo, io Points debugPoints, io Lines debugLines )'
+  Added to bin[normal][LitteDraw_createGeometry]
+registerFunction: thisType='(null)' func='function LittleDraw_addColoredLine( in Vec3 pos0, in Vec3 pos1, in Color color0, in Color color1, io Ref<Lines> lines, io Ref<ColorAttribute> vc )'
+  Skipped: isInternal()
+registerFunction: thisType='(null)' func='function LittleDraw_AddColoredPoint( in Vec3 pos, in Scalar size, in Color color, io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes )'
+  Skipped: isInternal()
+registerFunction: thisType='(null)' func='function UInt8[String][8] LDS_getCharMaskDict()'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='(null)' func='function UInt8[8] LDS_getCharMask( in String character )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='(null)' func='function Boolean LDS_pixelIsOn( in UInt8 character[8], in UInt8 col, in UInt8 row )'
+  Skipped: isInternal()
+registerFunction: thisType='LittleDrawVector' func='function LittleDrawVector?( in UInt8 mode, in Vec3 payload, in Color color, in UInt8 pointSize, in LittleDraw other )'
+  Added to bin[normal][LittleDrawPoint]
+registerFunction: thisType='LittleDrawVector' func='function LittleDrawVector?( in UInt8 mode, in Vec3 payload, in Scalar scale, in Color color, in LittleDraw other )'
+  Added to bin[normal][LittleDrawVector]
+registerFunction: thisType='LittleDrawVector' func='function LittleDrawVector.createLines?( io Ref<Lines> lines, io Ref<ColorAttribute> vc, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawVector' func='function LittleDrawVector.createPoints?( io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor?( in Color payload, in UInt8 pointSize, in LittleDraw other )'
+  Added to bin[normal][LittleDrawColor]
+registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor?( in Scalar payload, in Scalar intensity, in Color color, in Boolean invertedNegatives, in UInt8 pointSize, in LittleDraw other )'
+  Added to bin[normal][LittleDrawColorScalar]
+registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor?( in Vec3 payload, in Scalar intensity, in Boolean unit, in Boolean normalize, in UInt8 pointSize, in LittleDraw other )'
+  Added to bin[normal][LittleDrawColorVector]
+registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor.createPoints?( io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Mat44 payload, in Scalar scale, in Color color, in LittleDraw other )'
+  Added to bin[normal][LittleDrawAxisMat44]
+registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Xfo payload, in Scalar scale, in Color color, in LittleDraw other )'
+  Added to bin[normal][LittleDrawAxisXfo]
+registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis.createLines?( io Ref<Lines> lines, io Ref<ColorAttribute> vc, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString?( in UInt8 mode, in Boolean trail, in Boolean translationRelative, in Boolean drawContextPoint, in String payload, in Vec3 translate, in Quat ori, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
+  Added to bin[normal][LittleDrawString]
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.createLines?( io Ref<Lines> lines, io Ref<ColorAttribute> vc, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.createPoints?( io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawString' func='function UInt8[4] LittleDrawString.findSegments?( in UInt8 xcoord, in UInt8 ycoord, in Boolean pixelOn, io Boolean state_lastPixelOn, io UInt8 state_lineStart )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Boolean LittleDrawString.getContextPointFlag?()'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Boolean LittleDrawString.getModeBit?( in UInt8 bit )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Vec3 LittleDrawString.getPos?( in Size index, in UInt8 row, in UInt8 column )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Boolean LittleDrawString.getRelativeFlag?()'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Boolean LittleDrawString.getTextAsDotsFlag?()'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Boolean LittleDrawString.getTrailFlag?()'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Vec3 LittleDrawString.getXformedPos?( in Size index, in UInt8 row, in UInt8 column )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.setContextPointFlag!( in Boolean value )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.setModeBit!( in UInt8 bit, in Boolean value )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.setRelativeFlag!( in Boolean value )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.setTextAsDotsFlag!( in Boolean value )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.setTrailFlag!( in Boolean value )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDraw' func='function LittleDraw.createLines?( io Ref<Lines> lines, io Ref<ColorAttribute> vc, in Vec3 pos )'
+  Skipped: isInternal()
+registerFunction: thisType='LittleDraw' func='function LittleDraw.createPoints?( io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> sizes, in Vec3 pos )'
+  Skipped: isInternal()
+registerFunction: thisType='LittleDrawVector' func='function LittleDrawVector?( in UInt8 mode, in Vec3 payload, in Scalar scale, in Color color, in LittleDraw other )'
+registerFunction: thisType='LittleDrawVector' func='function LittleDrawVector?( in UInt8 mode, in Vec3 payload, in Color color, in UInt8 pointSize, in LittleDraw other )'
+registerFunction: thisType='LittleDrawVector' func='function LittleDrawVector.createLines?( io Ref<Lines> lines, io Ref<ColorAttribute> vc, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawVector' func='function LittleDrawVector.createPoints?( io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor?( in Color payload, in UInt8 pointSize, in LittleDraw other )'
+registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor?( in Scalar payload, in Scalar intensity, in Color color, in Boolean invertedNegatives, in UInt8 pointSize, in LittleDraw other )'
+registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor?( in Vec3 payload, in Scalar intensity, in Boolean unit, in Boolean normalize, in UInt8 pointSize, in LittleDraw other )'
+registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor.createPoints?( io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Mat44 payload, in Scalar scale, in Color color, in LittleDraw other )'
+registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Xfo payload, in Scalar scale, in Color color, in LittleDraw other )'
+registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis.createLines?( io Ref<Lines> lines, io Ref<ColorAttribute> vc, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='Vec3' func='function Color Vec3.toColor?( in Boolean unit, in Boolean normalize )'
+  Added to bin[normal][Color Vec3.toColor]
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString?( in UInt8 mode, in Boolean trail, in Boolean translationRelative, in Boolean drawContextPoint, in String payload, in Vec3 translate, in Quat ori, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
+registerFunction: thisType='LittleDrawString' func='function Boolean LittleDrawString.getModeBit?( in UInt8 bit )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.setModeBit!( in UInt8 bit, in Boolean value )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Boolean LittleDrawString.getTextAsDotsFlag?()'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.setTextAsDotsFlag!( in Boolean value )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Boolean LittleDrawString.getTrailFlag?()'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.setTrailFlag!( in Boolean value )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Boolean LittleDrawString.getRelativeFlag?()'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.setRelativeFlag!( in Boolean value )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Boolean LittleDrawString.getContextPointFlag?()'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.setContextPointFlag!( in Boolean value )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Vec3 LittleDrawString.getPos?( in Size index, in UInt8 row, in UInt8 column )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function Vec3 LittleDrawString.getXformedPos?( in Size index, in UInt8 row, in UInt8 column )'
+  Skipped: isPrivate()
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.createPoints?( io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawString' func='function LittleDrawString.createLines?( io Ref<Lines> lines, io Ref<ColorAttribute> vc, in Vec3 pos )'
+  Skipped: hasQualifier(dfgPresetOmit)
+registerFunction: thisType='LittleDrawString' func='function UInt8[4] LittleDrawString.findSegments?( in UInt8 xcoord, in UInt8 ycoord, in Boolean pixelOn, io Boolean state_lastPixelOn, io UInt8 state_lineStart )'
+  Skipped: isPrivate()
+processFunctions
+  bin[normal][LitteDraw_createGeometry][4] (asArray=false)
+    thisType='' code='function LitteDraw_createGeometry( in LittleDraw jobs[], in Geometry geo, io Points debugPoints, io Lines debugLines )'
+  bin[normal][LittleDrawPoint][5] (asArray=false)
+    thisType='LittleDrawVector' code='function LittleDrawVector?( in UInt8 mode, in Vec3 payload, in Color color, in UInt8 pointSize, in LittleDraw other )'
+  bin[normal][LittleDrawVector][5] (asArray=false)
+    thisType='LittleDrawVector' code='function LittleDrawVector?( in UInt8 mode, in Vec3 payload, in Scalar scale, in Color color, in LittleDraw other )'
+  bin[normal][LittleDrawColor][3] (asArray=false)
+    thisType='LittleDrawColor' code='function LittleDrawColor?( in Color payload, in UInt8 pointSize, in LittleDraw other )'
+  bin[normal][LittleDrawColorScalar][6] (asArray=false)
+    thisType='LittleDrawColor' code='function LittleDrawColor?( in Scalar payload, in Scalar intensity, in Color color, in Boolean invertedNegatives, in UInt8 pointSize, in LittleDraw other )'
+  bin[normal][LittleDrawColorVector][6] (asArray=false)
+    thisType='LittleDrawColor' code='function LittleDrawColor?( in Vec3 payload, in Scalar intensity, in Boolean unit, in Boolean normalize, in UInt8 pointSize, in LittleDraw other )'
+  bin[normal][LittleDrawAxisMat44][5] (asArray=false)
+    thisType='LittleDrawAxis' code='function LittleDrawAxis?( in UInt8 mode, in Mat44 payload, in Scalar scale, in Color color, in LittleDraw other )'
+  bin[normal][LittleDrawAxisXfo][5] (asArray=false)
+    thisType='LittleDrawAxis' code='function LittleDrawAxis?( in UInt8 mode, in Xfo payload, in Scalar scale, in Color color, in LittleDraw other )'
+  bin[normal][LittleDrawString][11] (asArray=false)
+    thisType='LittleDrawString' code='function LittleDrawString?( in UInt8 mode, in Boolean trail, in Boolean translationRelative, in Boolean drawContextPoint, in String payload, in Vec3 translate, in Quat ori, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
+  bin[normal][Color Vec3.toColor][2] (asArray=false)
+    thisType='Vec3' code='function Color Vec3.toColor?( in Boolean unit, in Boolean normalize )'

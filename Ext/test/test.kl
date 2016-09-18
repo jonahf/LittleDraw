@@ -3,13 +3,13 @@
 require LittleDraw;
 
 
-function test_print_char(String char) {
-  UInt8 mask[8] = getCharMask(char);
+function testPrintChar(String char) {
+  UInt8 mask[8] = LDS_getCharMask(char);
   for (Size i=0; i<8; i++) {
     String line;
     for (Size j=0; j<8; j++) {
       // Boolean pixel_on = mask[j] & (UInt8(1) << i);
-      Boolean pixel_on = font_pixel_on(mask, j, i);
+      Boolean pixel_on = LDS_pixelIsOn(mask, j, i);
       line += pixel_on ? "#" : " ";
     }
     report( line );
@@ -34,11 +34,11 @@ operator entry() {
   report("LittleDraw required.");
 
 
-  test_print_char("A");
+  testPrintChar("A");
 
-  String line = "hello people, my name is JONAH";
+  String line = "letters. Well lettered.";
   for (Size i=0; i<line.length(); i++) {
-    test_print_char(line[i]);
+    testPrintChar(line[i]);
   } 
 }
 
