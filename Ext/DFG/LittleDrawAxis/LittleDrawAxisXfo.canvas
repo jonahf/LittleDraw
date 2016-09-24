@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Supported types:\n  mode: UInt8\n  payload: Xfo\n  scale: Scalar\n  color: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawAxis\n"
+    "uiTooltip" : "Supported types:\n  mode: UInt8\n  local: Boolean\n  trail: Boolean\n  payload: Xfo\n  scale: Scalar\n  color: Color\n  pointSize: UInt8\n  other: LittleDraw\n  result: LittleDrawAxis\n"
     },
   "title" : "LittleDrawAxisXfo",
   "ports" : [
@@ -16,12 +16,26 @@
     {
       "objectType" : "ExecPort",
       "metadata" : {
-        "uiCombo" : "(\"Axes\", \"Axes trail\")"
+        "uiCombo" : "(\"Axes\", \"Crosses\")"
         },
       "name" : "mode",
       "nodePortType" : "Out",
       "execPortType" : "In",
       "typeSpec" : "UInt8"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "local",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "Boolean"
+      },
+    {
+      "objectType" : "ExecPort",
+      "name" : "trail",
+      "nodePortType" : "Out",
+      "execPortType" : "In",
+      "typeSpec" : "Boolean"
       },
     {
       "objectType" : "ExecPort",
@@ -89,11 +103,11 @@
   "extDeps" : {
     "LittleDraw" : "*"
     },
-  "presetGUID" : "C7D04E35286B81F015D265171B90D4CD",
+  "presetGUID" : "A9B27422E0EB15610BC20EB7E5660199",
   "code" : "require LittleDraw;
 
 dfgEntry {
-  result = LittleDrawAxis(mode, payload, scale, color, pointSize, other);
+  result = LittleDrawAxis(mode, local, trail, payload, scale, color, pointSize, other);
 }
 "
   }

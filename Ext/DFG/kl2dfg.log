@@ -7,14 +7,14 @@
 [FABRIC:MT] Registered extensions {LittleDraw:0.0.4,mactext:0.0.7,SimpLSystem:0.0.2} in directory: C:\Users\Jonah\development\fabric\extension_repos
 [FABRIC:MT] Registered extensions {FabricALEMBIC,FabricBULLET,FabricCIMG,FabricEXR,FabricFBX,FabricFILESTREAM,Geometry,FabricHDR,Images,FabricLIDAR,Math,FabricOBJ,FabricOPENCV,FabricOGL,FabricPNG,RTR,RTRAdaptors,FabricStringTools,FabricTEEM,FabricTGA,FabricVIDEO} in directory: C:\Program Files\Fabric Engine\\Exts
 [FABRIC:MT] IRCache: Not pruning since last prune was less than 24 hours ago
-[FABRIC:MT] Loaded extension Math in 252.278ms (cached)
-[FABRIC:MT] Loaded extension FabricSynchronization in 26.724ms (cached)
-[FABRIC:MT] Loaded extension FabricStatistics in 18.540ms (cached)
-[FABRIC:MT] Loaded extension Singletons in 2.346ms (cached)
-[FABRIC:MT] Loaded extension Util in 26.256ms (cached)
-[FABRIC:MT] Loaded extension Containers in 359.040ms (cached)
-[FABRIC:MT] Loaded extension Geometry in 580.689ms (cached)
-[FABRIC:MT] Loaded extension LittleDraw in 34.947ms (cached)
+[FABRIC:MT] Loaded extension Math in 254.480ms (cached)
+[FABRIC:MT] Loaded extension FabricSynchronization in 28.256ms (cached)
+[FABRIC:MT] Loaded extension FabricStatistics in 17.898ms (cached)
+[FABRIC:MT] Loaded extension Singletons in 2.513ms (cached)
+[FABRIC:MT] Loaded extension Util in 27.105ms (cached)
+[FABRIC:MT] Loaded extension Containers in 366.407ms (cached)
+[FABRIC:MT] Loaded extension Geometry in 573.782ms (cached)
+[FABRIC:MT] Loaded extension LittleDraw in 37.056ms (cached)
 registerFunction: thisType='(null)' func='function Boolean LittleDraw_GetModeBit( in UInt8 bitmask, in UInt8 bit )'
   Skipped: isInternal()
 registerFunction: thisType='(null)' func='function LittleDraw_SetModeBit( io UInt8 bitmask, in UInt8 bit, in Boolean value )'
@@ -47,9 +47,9 @@ registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor?( in
   Added to bin[normal][LittleDrawColorVector]
 registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor.createPoints?( io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes )'
   Skipped: hasQualifier(dfgPresetOmit)
-registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Mat44 payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
+registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Boolean local, in Boolean trail, in Mat44 payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
   Added to bin[normal][LittleDrawAxisMat44]
-registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Xfo payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
+registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Boolean local, in Boolean trail, in Xfo payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
   Added to bin[normal][LittleDrawAxisXfo]
 registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis.createLines?( io Ref<Lines> lines, io Ref<ColorAttribute> vc )'
   Skipped: hasQualifier(dfgPresetOmit)
@@ -104,8 +104,8 @@ registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor?( in
 registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor?( in Vec3 payload, in Scalar intensity, in Boolean unit, in Boolean normalize, in UInt8 pointSize, in LittleDraw other )'
 registerFunction: thisType='LittleDrawColor' func='function LittleDrawColor.createPoints?( io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes )'
   Skipped: hasQualifier(dfgPresetOmit)
-registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Mat44 payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
-registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Xfo payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
+registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Boolean local, in Boolean trail, in Mat44 payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
+registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis?( in UInt8 mode, in Boolean local, in Boolean trail, in Xfo payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
 registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis.createLines?( io Ref<Lines> lines, io Ref<ColorAttribute> vc )'
   Skipped: hasQualifier(dfgPresetOmit)
 registerFunction: thisType='LittleDrawAxis' func='function LittleDrawAxis.createPoints?( io Ref<Points> points, io Ref<ColorAttribute> vc, io Ref<ScalarAttribute> psizes )'
@@ -156,10 +156,10 @@ processFunctions
     thisType='LittleDrawColor' code='function LittleDrawColor?( in Scalar payload, in Scalar intensity, in Color color, in Boolean invertedNegatives, in UInt8 pointSize, in LittleDraw other )'
   bin[normal][LittleDrawColorVector][6] (asArray=false)
     thisType='LittleDrawColor' code='function LittleDrawColor?( in Vec3 payload, in Scalar intensity, in Boolean unit, in Boolean normalize, in UInt8 pointSize, in LittleDraw other )'
-  bin[normal][LittleDrawAxisMat44][6] (asArray=false)
-    thisType='LittleDrawAxis' code='function LittleDrawAxis?( in UInt8 mode, in Mat44 payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
-  bin[normal][LittleDrawAxisXfo][6] (asArray=false)
-    thisType='LittleDrawAxis' code='function LittleDrawAxis?( in UInt8 mode, in Xfo payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
+  bin[normal][LittleDrawAxisMat44][8] (asArray=false)
+    thisType='LittleDrawAxis' code='function LittleDrawAxis?( in UInt8 mode, in Boolean local, in Boolean trail, in Mat44 payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
+  bin[normal][LittleDrawAxisXfo][8] (asArray=false)
+    thisType='LittleDrawAxis' code='function LittleDrawAxis?( in UInt8 mode, in Boolean local, in Boolean trail, in Xfo payload, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
   bin[normal][LittleDrawString][11] (asArray=false)
     thisType='LittleDrawString' code='function LittleDrawString?( in UInt8 mode, in Boolean trail, in Boolean translationRelative, in Boolean drawContextPoint, in String payload, in Vec3 translate, in Quat ori, in Scalar scale, in Color color, in UInt8 pointSize, in LittleDraw other )'
   bin[normal][LittleDraw.setContextPosition][1] (asArray=false)

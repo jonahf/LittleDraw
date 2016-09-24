@@ -202,26 +202,25 @@ const UInt8 LD_MODE_A_AXIS_TRAIL = 1;
 object LittleDrawAxis : LittleDraw {
   Mat44 payload;
   Color color;
-  UInt8 mode;
+  UInt8 mode; // bit 0: draw
+              // bit 1: trail
+              // bit 2: local
+              // bit 3: crosses
   UInt8 pointSize;
 };
 
 /// \dfgPresetTitle LittleDrawAxisMat44
 /// \dfgPresetDefault color {'r':0.9, 'g':0.25, 'b':0.25, 'a':1.0}
 /// \dfgPresetDefault scale 1.0
-/// \dfgPresetCombo mode ("Axes", "Axes trail")
+/// \dfgPresetCombo mode ("Axes", "Crosses")
 /// \dfgPresetDefault pointSize 5;
-function LittleDrawAxis(UInt8 mode, Mat44 payload, Scalar scale, Color color, UInt8 pointSize, LittleDraw other) {
-  switch (mode) {
-    case 0:
-      LittleDraw_SetModeBit(this.mode, 0, true);
+function LittleDrawAxis(UInt8 mode, Boolean local, Boolean trail, Mat44 payload, Scalar scale, Color color, UInt8 pointSize, LittleDraw other) {
+  LittleDraw_SetModeBit(this.mode, 0, true);
+  if (trail)
       LittleDraw_SetModeBit(this.mode, 1, true);
-      break;
-    case 1:
-      LittleDraw_SetModeBit(this.mode, 0, true);
-      LittleDraw_SetModeBit(this.mode, 1, false);
-      break;
-  }
+  LittleDraw_SetModeBit(this.mode, 2, local);
+  LittleDraw_SetModeBit(this.mode, 3, mode == 1);
+
   Mat44 sclMat = Mat44();
   sclMat.setScaling(scale);
   this.payload = payload * sclMat;  this.color = color;
@@ -233,22 +232,14 @@ function LittleDrawAxis(UInt8 mode, Mat44 payload, Scalar scale, Color color, UI
 /// \dfgPresetDefault color {'r':1.0, 'g':1.0, 'b':1.0, 'a':1.0}
 /// \dfgPresetDefault scale 1.0
 /// \dfgPresetDefault pointSize 5;
-/// \dfgPresetCombo mode ("Axes", "Axes trail")
-function LittleDrawAxis(UInt8 mode, Xfo payload, Scalar scale, Color color, UInt8 pointSize, LittleDraw other) {
-  switch (mode) {
-    case 0:
-      LittleDraw_SetModeBit(this.mode, 0, true);
+/// \dfgPresetCombo mode ("Axes", "Crosses")
+function LittleDrawAxis(UInt8 mode, Boolean local, Boolean trail, Xfo payload, Scalar scale, Color color, UInt8 pointSize, LittleDraw other) {
+  LittleDraw_SetModeBit(this.mode, 0, true);
+  if (trail)
       LittleDraw_SetModeBit(this.mode, 1, true);
-      // this.mode = LD_MODE_A_AXIS;
-      break;
-    case 1:
-      LittleDraw_SetModeBit(this.mode, 0, true);
-      LittleDraw_SetModeBit(this.mode, 1, false);
-      // this.mode = LD_MODE_A_AXIS_TRAIL;
-      break;
-    default:
-      this.mode = LD_MODE_NONE;
-  }
+  LittleDraw_SetModeBit(this.mode, 2, local);
+  LittleDraw_SetModeBit(this.mode, 3, mode == 1);
+
   Mat44 sclMat = Mat44();
   sclMat.setScaling(scale);
   this.payload = payload.toMat44() * sclMat;
@@ -262,18 +253,19 @@ function LittleDrawAxis(UInt8 mode, Xfo payload, Scalar scale, Color color, UInt
 inline LittleDrawAxis.createLines(io Ref<Lines> lines, io Ref<ColorAttribute> vc) {
   if (!LittleDraw_GetModeBit(this.mode, 0))
     return;
-  Vec3 origin = this.payload.multiplyVector3(Vec3());
-  Vec3 x = this.payload.multiplyVector3(Vec3(1, 0, 0));
-  Vec3 y = this.payload.multiplyVector3(Vec3(0, 1, 0));
-  Vec3 z = this.payload.multiplyVector3(Vec3(0, 0, 1));
+  Boolean local = LittleDraw_GetModeBit(this.mode, 2);
+  Boolean crosses = LittleDraw_GetModeBit(this.mode, 3);
+  Vec3 o = this.payload.multiplyVector3(Vec3()) + (local ? this.ctx : Vec3());
+  Vec3 x = this.payload.multiplyVector3(Vec3(1, 0, 0)) + (local ? this.ctx : Vec3());
+  Vec3 y = this.payload.multiplyVector3(Vec3(0, 1, 0)) + (local ? this.ctx : Vec3());
+  Vec3 z = this.payload.multiplyVector3(Vec3(0, 0, 1)) + (local ? this.ctx : Vec3());
 
-  LittleDraw_AddColoredLine(this.ctx, origin, this.color*0.50, this.color*0.75, lines, vc);
+  if (LittleDraw_GetModeBit(this.mode, 1))
+    LittleDraw_AddColoredLine(this.ctx, o, this.color*0.50, this.color*0.75, lines, vc);
 
-  if (LittleDraw_GetModeBit(this.mode, 1)) {
-    LittleDraw_AddColoredLine(origin, x, (this.color+Color(1.0, 0.0, 0.0))/2, Color(1.0, 0.0, 0.0), lines, vc);
-    LittleDraw_AddColoredLine(origin, y, (this.color+Color(0.0, 1.0, 0.0))/2, Color(0.0, 1.0, 0.0), lines, vc);
-    LittleDraw_AddColoredLine(origin, z, (this.color+Color(0.25, 0.25, 1.0))/2, Color(0.25, 0.25, 1.0), lines, vc);
-  }
+  LittleDraw_AddColoredLine((crosses ? o+o-x : o), x, (this.color+Color(1.0, 0.0, 0.0))/2, Color(1.0, 0.0, 0.0), lines, vc);
+  LittleDraw_AddColoredLine((crosses ? o+o-y : o), y, (this.color+Color(0.0, 1.0, 0.0))/2, Color(0.0, 1.0, 0.0), lines, vc);
+  LittleDraw_AddColoredLine((crosses ? o+o-z : o), z, (this.color+Color(0.25, 0.25, 1.0))/2, Color(0.25, 0.25, 1.0), lines, vc);
 }
 
 
@@ -282,7 +274,8 @@ inline LittleDrawAxis.createPoints(io Ref<Points> points, io Ref<ColorAttribute>
   if (!LittleDraw_GetModeBit(this.mode, 0))
     return;
 
-  Vec3 origin = this.payload.multiplyVector3(Vec3());
+  Boolean local = LittleDraw_GetModeBit(this.mode, 2);
+  Vec3 origin = this.payload.multiplyVector3(Vec3()) + (local ? this.ctx : Vec3());
   LittleDraw_AddColoredPoint(origin, this.pointSize, this.color, points, vc, psizes);
 
   if (LittleDraw_GetModeBit(this.mode, 1))
